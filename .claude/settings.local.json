@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd ~/Downloads/ijwi-website && git init && git remote add origin https://github.com/adiking4804/ijwi-website.git)",
+      "Bash(cd ~/Downloads/ijwi-website && git add -A)"
+    ]
+  }
+}

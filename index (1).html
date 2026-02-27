@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ijwi AI — Voice Infrastructure for Africa's Languages</title>
+  <meta name="description" content="The agent revolution has no voice in Africa. Ijwi AI is building open-source speech recognition and voice synthesis for African languages — starting with Kinyarwanda and Swahili." />
+  <meta property="og:title" content="Ijwi AI — Voice Infrastructure for Africa" />
+  <meta property="og:description" content="1 billion+ African language speakers are locked out of the AI agent revolution. We're building the voice layer to change that." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.ijwi-ai.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ijwi AI — Voice Infrastructure for Africa" />
+  <meta name="twitter:description" content="Open-source ASR & TTS for African languages. The missing middleware for the agent era." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: #08090A; color: #F0EDE6; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+    ::selection { background: #E07D38; color: #08090A; }
+    a { color: #E07D38; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #08090A; }
+    ::-webkit-scrollbar-thumb { background: #222426; border-radius: 3px; }
+
+    @keyframes wave { 0%, 100% { height: 6px; opacity: 0.3; } 50% { height: 28px; opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+    @keyframes glow { 0%, 100% { box-shadow: 0 0 24px rgba(224,125,56,0.12); } 50% { box-shadow: 0 0 48px rgba(224,125,56,0.12), 0 0 96px rgba(224,125,56,0.05); } }
+    @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+    .fade-target { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-visible { opacity: 1; transform: translateY(0); }
+
+    .nav-link { font-size: 13px; font-weight: 500; color: #7D7870; cursor: pointer; background: none; border: none; font-family: inherit; padding: 0; }
+    .nav-link:hover { color: #F0EDE6; }
+    .nav-cta { font-size: 13px; font-weight: 700; color: #08090A; background: #E07D38; padding: 7px 18px; border-radius: 7px; cursor: pointer; border: none; font-family: inherit; }
+    .nav-cta:hover { opacity: 0.9; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none !important; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .flow-row { flex-direction: column !important; align-items: center !important; }
+      .flow-arrow { transform: rotate(90deg); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .features-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.5/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef, createContext, useContext } = React;
+
+    /* ─── i18n ─── */
+
+    const T = {
+      en: {
+        // Nav
+        navThesis: "Thesis",
+        navInfra: "Infrastructure",
+        navLangs: "Languages",
+        navCollect: "Collect",
+        navJoin: "Join Waitlist",
+
+        // Hero badge
+        heroBadge: "$1T+ wiped from SaaS · Voice agents can't speak African languages",
+        heroTitle1: "The agent revolution",
+        heroTitle2: "has no voice in",
+        heroTitle3: "Africa",
+        heroSub: "AI agents are replacing $1 trillion in SaaS. But they only work if they can understand you. For 1 billion+ African language speakers, they can't. We're building the voice infrastructure to change that.",
+        heroJoin: "Join the Waitlist",
+
+        // Thesis
+        thesisLabel: "The Shift",
+        thesisH1: "SaaS is dying.",
+        thesisH2: "AI agents are replacing it.",
+        thesisH3: "But they can't speak to Africa.",
+        thesisP1: "Anthropic published a markdown file and erased $300 billion in market cap. IBM lost 30% in a day. The SaaS model — selling software seats to humans — is collapsing because AI agents don't need seats. They need APIs.",
+        thesisP2a: "The future is you talking to your agent. It handles your banking, healthcare, taxes, everything. No apps. No dashboards. Just conversation. But that future has a prerequisite: ",
+        thesisP2b: "the AI has to understand your language.",
+        thesisGapTitle: "The gap no one is talking about",
+        thesisQ1: "Can an agent manage your M-Pesa in Kinyarwanda?",
+        thesisQ2: "Can a farmer ask a health question in Swahili and get a voice response?",
+        thesisQ3: "Can any voice AI handle the 2,000+ languages spoken across Africa?",
+        thesisA1: "No.", thesisA2: "No.", thesisA3: "Almost none.",
+        thesisChartLabel: "African language support by platform",
+
+        // Infrastructure
+        infraLabel: "What We're Building",
+        infraH: "Not an app. Infrastructure.",
+        infraP: "We're building the voice layer that every AI agent needs to operate in African languages. Open-source ASR, TTS, and translation APIs — the missing middleware for a continent of 1.4 billion people.",
+        infraFlowSpeaker: "Speaker",
+        infraFlowAgent: "AI Agent",
+        infraFlowHears: "Hears answer",
+        infraSTT: "Speech-to-Text",
+        infraSTTDesc: "Whisper fine-tuned for African languages. <15% WER on Kinyarwanda. Every agent needs ears.",
+        infraTTS: "Text-to-Speech",
+        infraTTSDesc: "VITS/MMS models producing natural African language speech. Every agent needs a voice.",
+        infraTranslation: "Translation API",
+        infraTranslationDesc: "Real-time translation between African languages and English/French. The bridge between worlds.",
+
+        // Quote
+        quoteText: '"The notion that business applications will continue to exist is silly. They all will collapse in this agent era because they\'re essentially just databases with a bunch of business logic."',
+        quoteSub: "CEO, Microsoft · December 2024",
+        quoteCaption: "14 months later: $1 trillion in SaaS market cap erased",
+
+        // Market
+        marketLabel: "The Market",
+        marketH: "The numbers that matter",
+        marketMobile: "African mobile money by 2034",
+        marketUSSD: "USSD-only (no voice option)",
+        marketPeople: "People across Africa",
+        marketLangs: "African languages",
+        marketSupported: "Supported by any voice AI",
+        marketAgents: "Full voice agents in African languages",
+
+        // Languages
+        langsLabel: "Languages",
+        langsH: "Starting with two. Scaling to all.",
+
+        // Collect
+        collectLabel: "Introducing",
+        collectH: "Ijwi Collect",
+        collectP: "A gamified app that turns voice contributions into a movement. Record speech in your language, compete on leaderboards, earn badges — and help build the voice infrastructure Africa needs for the agent era.",
+        collectRecord: "Record",
+        collectRecordDesc: "Read prompts or speak freely. 15 seconds per clip. Your voice trains the models.",
+        collectStreaks: "Streaks & XP",
+        collectStreaksDesc: "Daily goals, streak tracking, and XP that levels you up as you contribute more.",
+        collectLeaderboards: "Leaderboards",
+        collectLeaderboardsDesc: "Global, country, and city rankings. Kigali vs Nairobi vs Lagos vs Brussels.",
+        collectBadges: "18+ Badges",
+        collectBadgesDesc: "From First Voice to Community Legend. Unlock achievements as you build Africa's voice data.",
+        collectChallenges: "Challenges",
+        collectChallengesDesc: "Time-limited community competitions. Healthcare Heroes. Swahili Sunday. Kigali Sprint.",
+        collectValidate: "Validate",
+        collectValidateDesc: "Listen to others' recordings and vote on quality. Earn XP for quality control.",
+        collectComing: "React Native · iOS & Android · Coming Q2 2026",
+        collectBuiltWith: "Built with Expo + Supabase · Open source",
+
+        // Flywheel
+        flywheelLabel: "The Flywheel",
+        flywheelH: "Data → Models → Agents → Impact → More Data",
+        fw1Title: "Contributors record speech",
+        fw1Desc: "Gamified app collects hours of African language audio",
+        fw2Title: "We train ASR & TTS models",
+        fw2Desc: "Whisper + VITS fine-tuned on real African speech data",
+        fw3Title: "Models power voice APIs",
+        fw3Desc: "Any agent can now hear and speak African languages",
+        fw4Title: "Agents serve 1B+ people",
+        fw4Desc: "Voice banking, healthcare, education — in your language",
+        fw5Title: "Usage drives more collection",
+        fw5Desc: "More speakers see the impact → more contributions",
+
+        // Data governance
+        govLabel: "Data Governance",
+        govH: "African data, African rules",
+        govP: "All speech data follows the Esethu Framework — ensuring African communities own and benefit from their linguistic data.",
+        govR1: "Free for African researchers and organizations",
+        govR2: "Commercially licensed for non-African companies",
+        govR3: "Revenue reinvested into more African language data",
+        govR4: "Speaker data anonymized — IDs only, no names stored",
+        govR5: "Informed consent required before any recording",
+
+        // Ecosystem
+        ecoLabel: "Building alongside",
+
+        // Waitlist
+        waitH: "Lend your voice",
+        waitP: "The agent revolution shouldn't leave a continent behind. Join the waitlist — whether you speak Kinyarwanda, Swahili, Yorùbá, or any African language.",
+        waitPlaceholder: "your@email.com",
+        waitBtn: "Join Waitlist →",
+        waitBtnLoading: "Joining...",
+        waitSuccess: "You're on the list.",
+        waitDisclaimer: "No spam. Just a launch notification.",
+
+        // Footer
+        footerTag: "Voice infrastructure for Africa · Open source · MIT",
+        footerCopy: "© 2026 Ijwi AI · Built in Belgium 🇧🇪 for Africa 🌍",
+      },
+
+      fr: {
+        navThesis: "Thèse",
+        navInfra: "Infrastructure",
+        navLangs: "Langues",
+        navCollect: "Collecter",
+        navJoin: "Rejoindre la liste",
+
+        heroBadge: "$1T+ effacés du SaaS · Les agents vocaux ne parlent pas les langues africaines",
+        heroTitle1: "La révolution des agents",
+        heroTitle2: "n'a pas de voix en",
+        heroTitle3: "Afrique",
+        heroSub: "Les agents IA remplacent 1 000 milliards de dollars de SaaS. Mais ils ne fonctionnent que s'ils vous comprennent. Pour plus d'un milliard de locuteurs de langues africaines, c'est impossible. Nous construisons l'infrastructure vocale pour changer cela.",
+        heroJoin: "Rejoindre la liste d'attente",
+
+        thesisLabel: "Le tournant",
+        thesisH1: "Le SaaS est mourant.",
+        thesisH2: "Les agents IA le remplacent.",
+        thesisH3: "Mais ils ne parlent pas à l'Afrique.",
+        thesisP1: "Anthropic a publié un fichier markdown et effacé 300 milliards de dollars de capitalisation boursière. IBM a perdu 30 % en un jour. Le modèle SaaS — vendre des licences logicielles aux humains — s'effondre car les agents IA n'ont pas besoin de licences. Ils ont besoin d'APIs.",
+        thesisP2a: "L'avenir, c'est de parler à votre agent. Il gère vos finances, votre santé, vos impôts, tout. Plus d'applications. Plus de tableaux de bord. Juste une conversation. Mais cet avenir a un prérequis : ",
+        thesisP2b: "l'IA doit comprendre votre langue.",
+        thesisGapTitle: "Le fossé dont personne ne parle",
+        thesisQ1: "Un agent peut-il gérer votre M-Pesa en Kinyarwanda ?",
+        thesisQ2: "Un agriculteur peut-il poser une question de santé en Swahili et recevoir une réponse vocale ?",
+        thesisQ3: "Une IA vocale peut-elle gérer les 2 000+ langues parlées en Afrique ?",
+        thesisA1: "Non.", thesisA2: "Non.", thesisA3: "Presque aucune.",
+        thesisChartLabel: "Support des langues africaines par plateforme",
+
+        infraLabel: "Ce que nous construisons",
+        infraH: "Pas une app. De l'infrastructure.",
+        infraP: "Nous construisons la couche vocale dont chaque agent IA a besoin pour fonctionner dans les langues africaines. ASR, TTS et APIs de traduction open source — le middleware manquant pour un continent de 1,4 milliard de personnes.",
+        infraFlowSpeaker: "Locuteur",
+        infraFlowAgent: "Agent IA",
+        infraFlowHears: "Entend la réponse",
+        infraSTT: "Speech-to-Text",
+        infraSTTDesc: "Whisper ajusté pour les langues africaines. <15% WER en Kinyarwanda. Chaque agent a besoin d'oreilles.",
+        infraTTS: "Text-to-Speech",
+        infraTTSDesc: "Modèles VITS/MMS produisant de la parole naturelle en langues africaines. Chaque agent a besoin d'une voix.",
+        infraTranslation: "API de traduction",
+        infraTranslationDesc: "Traduction en temps réel entre langues africaines et anglais/français. Le pont entre les mondes.",
+
+        quoteText: '"L\'idée que les applications d\'entreprise continueront d\'exister est absurde. Elles s\'effondreront toutes dans cette ère des agents car ce ne sont essentiellement que des bases de données avec de la logique métier."',
+        quoteSub: "PDG, Microsoft · Décembre 2024",
+        quoteCaption: "14 mois plus tard : 1 000 milliards $ de capitalisation SaaS effacés",
+
+        marketLabel: "Le marché",
+        marketH: "Les chiffres qui comptent",
+        marketMobile: "Mobile money africain d'ici 2034",
+        marketUSSD: "USSD uniquement (pas d'option vocale)",
+        marketPeople: "Personnes à travers l'Afrique",
+        marketLangs: "Langues africaines",
+        marketSupported: "Supportées par une IA vocale",
+        marketAgents: "Agents vocaux complets en langues africaines",
+
+        langsLabel: "Langues",
+        langsH: "Commencer par deux. Les couvrir toutes.",
+
+        collectLabel: "Présentation",
+        collectH: "Ijwi Collect",
+        collectP: "Une application gamifiée qui transforme les contributions vocales en un mouvement. Enregistrez votre voix dans votre langue, grimpez les classements, gagnez des badges — et aidez à construire l'infrastructure vocale dont l'Afrique a besoin pour l'ère des agents.",
+        collectRecord: "Enregistrer",
+        collectRecordDesc: "Lisez des phrases ou parlez librement. 15 secondes par clip. Votre voix entraîne les modèles.",
+        collectStreaks: "Séries & XP",
+        collectStreaksDesc: "Objectifs quotidiens, suivi de séries et XP qui vous font monter de niveau.",
+        collectLeaderboards: "Classements",
+        collectLeaderboardsDesc: "Classements mondiaux, par pays et par ville. Kigali vs Nairobi vs Lagos vs Bruxelles.",
+        collectBadges: "18+ Badges",
+        collectBadgesDesc: "De Première Voix à Légende communautaire. Débloquez des réalisations en construisant les données vocales de l'Afrique.",
+        collectChallenges: "Défis",
+        collectChallengesDesc: "Compétitions communautaires à durée limitée. Healthcare Heroes. Swahili Sunday. Kigali Sprint.",
+        collectValidate: "Valider",
+        collectValidateDesc: "Écoutez les enregistrements des autres et votez pour la qualité. Gagnez de l'XP pour le contrôle qualité.",
+        collectComing: "React Native · iOS & Android · Lancement T2 2026",
+        collectBuiltWith: "Construit avec Expo + Supabase · Open source",
+
+        flywheelLabel: "Le cercle vertueux",
+        flywheelH: "Données → Modèles → Agents → Impact → Plus de données",
+        fw1Title: "Les contributeurs enregistrent leur voix",
+        fw1Desc: "L'application gamifiée collecte des heures d'audio en langues africaines",
+        fw2Title: "Nous entraînons les modèles ASR & TTS",
+        fw2Desc: "Whisper + VITS ajustés sur de vraies données vocales africaines",
+        fw3Title: "Les modèles alimentent les APIs vocales",
+        fw3Desc: "N'importe quel agent peut désormais entendre et parler les langues africaines",
+        fw4Title: "Les agents servent 1Md+ de personnes",
+        fw4Desc: "Banque vocale, santé, éducation — dans votre langue",
+        fw5Title: "L'utilisation stimule la collecte",
+        fw5Desc: "Plus de locuteurs voient l'impact → plus de contributions",
+
+        govLabel: "Gouvernance des données",
+        govH: "Données africaines, règles africaines",
+        govP: "Toutes les données vocales suivent le cadre Esethu — garantissant que les communautés africaines possèdent et bénéficient de leurs données linguistiques.",
+        govR1: "Gratuit pour les chercheurs et organisations africaines",
+        govR2: "Licence commerciale pour les entreprises non africaines",
+        govR3: "Revenus réinvestis dans plus de données linguistiques africaines",
+        govR4: "Données des locuteurs anonymisées — identifiants seulement, pas de noms",
+        govR5: "Consentement éclairé requis avant tout enregistrement",
+
+        ecoLabel: "Nous construisons aux côtés de",
+
+        waitH: "Prêtez votre voix",
+        waitP: "La révolution des agents ne devrait pas laisser un continent derrière. Rejoignez la liste d'attente — que vous parliez Kinyarwanda, Swahili, Yorùbá ou toute autre langue africaine.",
+        waitPlaceholder: "votre@email.com",
+        waitBtn: "Rejoindre la liste →",
+        waitBtnLoading: "Inscription...",
+        waitSuccess: "Vous êtes inscrit(e).",
+        waitDisclaimer: "Pas de spam. Juste une notification de lancement.",
+
+        footerTag: "Infrastructure vocale pour l'Afrique · Open source · MIT",
+        footerCopy: "© 2026 Ijwi AI · Construit en Belgique 🇧🇪 pour l'Afrique 🌍",
+      },
+
+      nl: {
+        navThesis: "These",
+        navInfra: "Infrastructuur",
+        navLangs: "Talen",
+        navCollect: "Verzamelen",
+        navJoin: "Inschrijven",
+
+        heroBadge: "$1T+ weggevaagd uit SaaS · Spraakagenten spreken geen Afrikaanse talen",
+        heroTitle1: "De agentrevolutie",
+        heroTitle2: "heeft geen stem in",
+        heroTitle3: "Afrika",
+        heroSub: "AI-agenten vervangen $1 biljoen aan SaaS. Maar ze werken alleen als ze je begrijpen. Voor meer dan 1 miljard sprekers van Afrikaanse talen lukt dat niet. Wij bouwen de spraakinfrastructuur om dat te veranderen.",
+        heroJoin: "Schrijf je in op de wachtlijst",
+
+        thesisLabel: "De verschuiving",
+        thesisH1: "SaaS sterft uit.",
+        thesisH2: "AI-agenten nemen het over.",
+        thesisH3: "Maar ze kunnen niet praten met Afrika.",
+        thesisP1: "Anthropic publiceerde een markdown-bestand en wiste $300 miljard aan beurswaarde. IBM verloor 30% op één dag. Het SaaS-model — softwarelicenties verkopen aan mensen — stort in omdat AI-agenten geen licenties nodig hebben. Ze hebben APIs nodig.",
+        thesisP2a: "De toekomst is praten met je agent. Die regelt je bankzaken, gezondheidszorg, belastingen, alles. Geen apps. Geen dashboards. Gewoon een gesprek. Maar die toekomst heeft een voorwaarde: ",
+        thesisP2b: "de AI moet je taal begrijpen.",
+        thesisGapTitle: "De kloof waar niemand over praat",
+        thesisQ1: "Kan een agent je M-Pesa beheren in het Kinyarwanda?",
+        thesisQ2: "Kan een boer een gezondheidsvraag stellen in het Swahili en een gesproken antwoord krijgen?",
+        thesisQ3: "Kan een spraak-AI de 2.000+ talen in Afrika aan?",
+        thesisA1: "Nee.", thesisA2: "Nee.", thesisA3: "Bijna geen.",
+        thesisChartLabel: "Ondersteuning Afrikaanse talen per platform",
+
+        infraLabel: "Wat we bouwen",
+        infraH: "Geen app. Infrastructuur.",
+        infraP: "We bouwen de spraaklaag die elke AI-agent nodig heeft om in Afrikaanse talen te werken. Open-source ASR, TTS en vertaal-APIs — de ontbrekende middleware voor een continent van 1,4 miljard mensen.",
+        infraFlowSpeaker: "Spreker",
+        infraFlowAgent: "AI-agent",
+        infraFlowHears: "Hoort antwoord",
+        infraSTT: "Speech-to-Text",
+        infraSTTDesc: "Whisper afgestemd op Afrikaanse talen. <15% WER voor Kinyarwanda. Elke agent heeft oren nodig.",
+        infraTTS: "Text-to-Speech",
+        infraTTSDesc: "VITS/MMS-modellen die natuurlijke Afrikaanse spraak produceren. Elke agent heeft een stem nodig.",
+        infraTranslation: "Vertaal-API",
+        infraTranslationDesc: "Realtime vertaling tussen Afrikaanse talen en Engels/Frans. De brug tussen werelden.",
+
+        quoteText: '"Het idee dat bedrijfsapplicaties zullen blijven bestaan is belachelijk. Ze zullen allemaal instorten in dit agententijdperk omdat het in wezen gewoon databases zijn met wat bedrijfslogica."',
+        quoteSub: "CEO, Microsoft · December 2024",
+        quoteCaption: "14 maanden later: $1 biljoen aan SaaS-beurswaarde verdwenen",
+
+        marketLabel: "De markt",
+        marketH: "De cijfers die ertoe doen",
+        marketMobile: "Afrikaans mobiel geld tegen 2034",
+        marketUSSD: "Enkel USSD (geen spraakoptie)",
+        marketPeople: "Mensen in heel Afrika",
+        marketLangs: "Afrikaanse talen",
+        marketSupported: "Ondersteund door spraak-AI",
+        marketAgents: "Volledige spraakagenten in Afrikaanse talen",
+
+        langsLabel: "Talen",
+        langsH: "Beginnen met twee. Opschalen naar allemaal.",
+
+        collectLabel: "Introductie",
+        collectH: "Ijwi Collect",
+        collectP: "Een gegamificeerde app die spraakbijdragen omzet in een beweging. Neem spraak op in je taal, strijd om de ranglijsten, verdien badges — en help de spraakinfrastructuur te bouwen die Afrika nodig heeft voor het agententijdperk.",
+        collectRecord: "Opnemen",
+        collectRecordDesc: "Lees zinnen voor of spreek vrij. 15 seconden per clip. Jouw stem traint de modellen.",
+        collectStreaks: "Reeksen & XP",
+        collectStreaksDesc: "Dagelijkse doelen, reeksregistratie en XP die je laten stijgen naarmate je meer bijdraagt.",
+        collectLeaderboards: "Ranglijsten",
+        collectLeaderboardsDesc: "Wereldwijde, nationale en stadsranglijsten. Kigali vs Nairobi vs Lagos vs Brussel.",
+        collectBadges: "18+ Badges",
+        collectBadgesDesc: "Van Eerste Stem tot Gemeenschapslegende. Ontgrendel prestaties terwijl je Afrika's spraakdata opbouwt.",
+        collectChallenges: "Uitdagingen",
+        collectChallengesDesc: "Tijdgebonden gemeenschapscompetities. Healthcare Heroes. Swahili Sunday. Kigali Sprint.",
+        collectValidate: "Valideren",
+        collectValidateDesc: "Luister naar opnames van anderen en beoordeel de kwaliteit. Verdien XP voor kwaliteitscontrole.",
+        collectComing: "React Native · iOS & Android · Lancering Q2 2026",
+        collectBuiltWith: "Gebouwd met Expo + Supabase · Open source",
+
+        flywheelLabel: "Het vliegwiel",
+        flywheelH: "Data → Modellen → Agenten → Impact → Meer data",
+        fw1Title: "Bijdragers nemen spraak op",
+        fw1Desc: "Gegamificeerde app verzamelt uren Afrikaanse taal-audio",
+        fw2Title: "Wij trainen ASR & TTS-modellen",
+        fw2Desc: "Whisper + VITS afgestemd op echte Afrikaanse spraakdata",
+        fw3Title: "Modellen voeden spraak-APIs",
+        fw3Desc: "Elke agent kan nu Afrikaanse talen horen en spreken",
+        fw4Title: "Agenten bedienen 1Md+ mensen",
+        fw4Desc: "Spraakbankieren, gezondheidszorg, onderwijs — in jouw taal",
+        fw5Title: "Gebruik stimuleert meer verzameling",
+        fw5Desc: "Meer sprekers zien de impact → meer bijdragen",
+
+        govLabel: "Databeheer",
+        govH: "Afrikaanse data, Afrikaanse regels",
+        govP: "Alle spraakdata volgt het Esethu Framework — waardoor Afrikaanse gemeenschappen eigenaar zijn van hun taaldata en ervan profiteren.",
+        govR1: "Gratis voor Afrikaanse onderzoekers en organisaties",
+        govR2: "Commerciële licentie voor niet-Afrikaanse bedrijven",
+        govR3: "Inkomsten geherinvesteerd in meer Afrikaanse taaldata",
+        govR4: "Sprekerdata geanonimiseerd — alleen ID's, geen namen opgeslagen",
+        govR5: "Geïnformeerde toestemming vereist vóór elke opname",
+
+        ecoLabel: "We bouwen samen met",
+
+        waitH: "Leen je stem",
+        waitP: "De agentrevolutie mag geen continent achterlaten. Schrijf je in op de wachtlijst — of je nu Kinyarwanda, Swahili, Yorùbá of een andere Afrikaanse taal spreekt.",
+        waitPlaceholder: "jouw@email.com",
+        waitBtn: "Inschrijven →",
+        waitBtnLoading: "Bezig...",
+        waitSuccess: "Je staat op de lijst.",
+        waitDisclaimer: "Geen spam. Alleen een lanceringsbericht.",
+
+        footerTag: "Spraakinfrastructuur voor Afrika · Open source · MIT",
+        footerCopy: "© 2026 Ijwi AI · Gebouwd in België 🇧🇪 voor Afrika 🌍",
+      },
+    };
+
+    function getCookie(name) {
+      const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    function setCookie(name, val) {
+      document.cookie = name + '=' + encodeURIComponent(val) + ';path=/;max-age=31536000;SameSite=Lax';
+    }
+
+    function detectLang() {
+      const saved = getCookie('ijwi_lang');
+      if (saved && T[saved]) return saved;
+      const nav = (navigator.language || '').toLowerCase();
+      if (nav.startsWith('fr')) return 'fr';
+      if (nav.startsWith('nl')) return 'nl';
+      return 'en';
+    }
+
+    const LangCtx = createContext({ lang: 'en', t: T.en, setLang: () => {} });
+
+    function useLang() { return useContext(LangCtx); }
+
+    /* ─── Design tokens ─── */
+
+    const C = {
+      bg: "#08090A", bgSub: "#0F1012", card: "#161819", border: "#222426",
+      orange: "#E07D38", orangeGlow: "rgba(224,125,56,0.12)",
+      teal: "#2AA198", tealGlow: "rgba(42,161,152,0.1)",
+      white: "#F0EDE6", dim: "#7D7870", dimmer: "#4A4740",
+      gold: "#D4A017", red: "#E04545", green: "#34C759",
+    };
+
+    function scrollTo(id) {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function useInView(threshold = 0.12) {
+      const ref = useRef(null);
+      const [visible, setVisible] = useState(false);
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold });
+        obs.observe(el);
+        return () => obs.disconnect();
+      }, []);
+      return [ref, visible];
+    }
+
+    function FadeIn({ children, delay = 0, style = {} }) {
+      const [ref, visible] = useInView();
+      return (
+        <div ref={ref} style={{
+          opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(28px)",
+          transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`, ...style,
+        }}>{children}</div>
+      );
+    }
+
+    function AnimCount({ target, suffix = "", prefix = "" }) {
+      const [val, setVal] = useState(0);
+      const [ref, visible] = useInView();
+      useEffect(() => {
+        if (!visible) return;
+        let start = 0;
+        const step = target / 120;
+        const id = setInterval(() => {
+          start += step;
+          if (start >= target) { setVal(target); clearInterval(id); }
+          else setVal(Math.floor(start));
+        }, 16);
+        return () => clearInterval(id);
+      }, [visible, target]);
+      return <span ref={ref}>{prefix}{val.toLocaleString()}{suffix}</span>;
+    }
+
+    function WaveBar({ delay }) {
+      return <div style={{ width: 3, borderRadius: 2, backgroundColor: C.orange, animation: `wave 1.2s ease-in-out ${delay}s infinite` }} />;
+    }
+
+    function SectionLabel({ color, children }) {
+      return <div style={{ fontSize: 12, fontWeight: 700, color, textTransform: "uppercase", letterSpacing: "0.18em", marginBottom: 16 }}>{children}</div>;
+    }
+
+    function TerminalLine({ prompt, command, output, delay = 0 }) {
+      const [ref, visible] = useInView();
+      return (
+        <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-10px)", transition: `all 0.5s ease ${delay}s` }}>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, marginBottom: 2 }}>
+            <span style={{ color: C.teal }}>{prompt}</span>
+            <span style={{ color: C.white }}> {command}</span>
+          </div>
+          {output && <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: C.dim, marginBottom: 8, paddingLeft: 16 }}>{output}</div>}
+        </div>
+      );
+    }
+
+    /* ─── Language Toggle ─── */
+
+    function LangToggle() {
+      const { lang, setLang } = useLang();
+      const langs = ['en', 'fr', 'nl'];
+      const labels = { en: 'EN', fr: 'FR', nl: 'NL' };
+      return (
+        <div style={{
+          display: "inline-flex", borderRadius: 99, border: `1px solid ${C.border}`,
+          backgroundColor: "rgba(22,24,25,0.9)", padding: 2, gap: 0,
+        }}>
+          {langs.map(l => (
+            <button key={l} onClick={() => setLang(l)} style={{
+              padding: "4px 10px", borderRadius: 99, border: "none", cursor: "pointer",
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 11, fontWeight: 700,
+              letterSpacing: "0.04em", transition: "all 0.2s",
+              backgroundColor: l === lang ? C.orange : "transparent",
+              color: l === lang ? C.bg : C.dimmer,
+            }}>{labels[l]}</button>
+          ))}
+        </div>
+      );
+    }
+
+    const DEAD_COMPANIES = [
+      { name: "Salesforce", drop: "-45%", sector: "CRM" },
+      { name: "Adobe", drop: "-40%", sector: "Creative" },
+      { name: "IBM", drop: "-30%", sector: "Legacy IT" },
+      { name: "Thomson Reuters", drop: "-20%", sector: "Legal" },
+      { name: "LegalZoom", drop: "-20%", sector: "Legal" },
+      { name: "HubSpot", drop: "-35%", sector: "Marketing" },
+    ];
+
+    const LANGS_DATA = [
+      { flag: "\u{1F1F7}\u{1F1FC}", name: "Kinyarwanda", speakers: "13M", pct: 68, status: "Active" },
+      { flag: "\u{1F1F0}\u{1F1EA}", name: "Kiswahili", speakers: "100M+", pct: 31, status: "Active" },
+      { flag: "\u{1F1F3}\u{1F1EC}", name: "Yor\u00f9b\u00e1", speakers: "50M", pct: 12, status: "Collecting" },
+      { flag: "\u{1F1EA}\u{1F1F9}", name: "\u12A0\u121B\u122D\u129B", speakers: "57M", pct: 5, status: "Soon" },
+    ];
+
+    const LANG_STATUS = {
+      en: { Active: "Active", Collecting: "Collecting", Soon: "Soon" },
+      fr: { Active: "Actif", Collecting: "Collecte", Soon: "Bientôt" },
+      nl: { Active: "Actief", Collecting: "Verzamelen", Soon: "Binnenkort" },
+    };
+
+    function App() {
+      const [lang, setLangState] = useState(detectLang);
+      const t = T[lang];
+
+      const setLang = (l) => {
+        setLangState(l);
+        setCookie('ijwi_lang', l);
+        document.documentElement.lang = l;
+      };
+
+      useEffect(() => { document.documentElement.lang = lang; }, []);
+
+      const [email, setEmail] = useState("");
+      const [submitted, setSubmitted] = useState(false);
+      const [submitting, setSubmitting] = useState(false);
+
+      const handleWaitlist = async (e) => {
+        e.preventDefault();
+        if (!email.includes("@") || submitting) return;
+        setSubmitting(true);
+        try {
+          await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_key: "229e2a40-1cb1-43f7-b24d-e98156910727",
+              email: email,
+              subject: "New Ijwi AI Waitlist Signup",
+              from_name: "Ijwi AI Waitlist",
+            }),
+          });
+          setSubmitted(true);
+        } catch (err) {
+          console.error("Submission error:", err);
+        } finally {
+          setSubmitting(false);
+        }
+      };
+
+      const navMap = {
+        [t.navThesis]: "thesis",
+        [t.navInfra]: "infrastructure",
+        [t.navLangs]: "languages",
+        [t.navCollect]: "collect",
+      };
+
+      return (
+        <LangCtx.Provider value={{ lang, t, setLang }}>
+        <div>
+          {/* NAV */}
+          <nav style={{
+            position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+            padding: "14px 32px", display: "flex", justifyContent: "space-between", alignItems: "center",
+            backgroundColor: "rgba(8,9,10,0.88)", backdropFilter: "blur(24px)",
+            borderBottom: `1px solid ${C.border}`,
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 3, height: 22 }}>
+                {[0, 0.15, 0.3, 0.15, 0].map((d, i) => <WaveBar key={i} delay={d} />)}
+              </div>
+              <span style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, fontWeight: 800, letterSpacing: "-0.02em", color: C.white }}>
+                ijwi<span style={{ color: C.orange }}>.</span>ai
+              </span>
+            </div>
+            <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: 20 }}>
+              {Object.entries(navMap).map(([label, id]) => (
+                <button key={id} className="nav-link" onClick={() => scrollTo(id)}>{label}</button>
+              ))}
+              <a href="https://github.com/adiking4804/ijwi-ai" target="_blank" className="nav-link">GitHub</a>
+              <LangToggle />
+              <button className="nav-cta" onClick={() => scrollTo("waitlist")}>{t.navJoin}</button>
+            </div>
+          </nav>
+
+          {/* HERO */}
+          <section style={{
+            minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center",
+            alignItems: "center", textAlign: "center", padding: "120px 24px 60px",
+            position: "relative",
+            background: `radial-gradient(ellipse at 50% -10%, ${C.orangeGlow} 0%, transparent 55%),
+                         radial-gradient(ellipse at 80% 90%, ${C.tealGlow} 0%, transparent 35%), ${C.bg}`,
+          }}>
+            <FadeIn delay={0.1}>
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: 8, padding: "5px 14px",
+                borderRadius: 99, border: `1px solid ${C.border}`, backgroundColor: C.card, marginBottom: 28,
+              }}>
+                <span style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: C.red, animation: "pulse 1.5s infinite" }} />
+                <span style={{ fontSize: 12, fontWeight: 600, color: C.dim, fontFamily: "'JetBrains Mono', monospace" }}>
+                  {t.heroBadge}
+                </span>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <h1 style={{
+                fontFamily: "'Syne', sans-serif", fontSize: "clamp(38px, 6.5vw, 76px)", fontWeight: 800,
+                lineHeight: 1.05, letterSpacing: "-0.035em", maxWidth: 880, marginBottom: 24,
+              }}>
+                {t.heroTitle1}<br />{t.heroTitle2}<br />
+                <span style={{
+                  background: `linear-gradient(135deg, ${C.orange}, ${C.gold}, ${C.orange})`,
+                  backgroundSize: "200% 200%", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+                  animation: "gradientShift 4s ease infinite",
+                }}>{t.heroTitle3}</span>
+              </h1>
+            </FadeIn>
+
+            <FadeIn delay={0.35}>
+              <p style={{
+                fontSize: "clamp(15px, 2vw, 19px)", color: C.dim, maxWidth: 580,
+                lineHeight: 1.7, marginBottom: 36, fontWeight: 400,
+              }}>
+                {t.heroSub}
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.45}>
+              <div className="hero-buttons" style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
+                <button onClick={() => scrollTo("waitlist")} style={{
+                  padding: "13px 30px", borderRadius: 9, backgroundColor: C.orange, color: C.bg,
+                  fontSize: 15, fontWeight: 700, cursor: "pointer", animation: "glow 3s ease infinite",
+                  border: "none", fontFamily: "'Outfit', sans-serif",
+                }}>{t.heroJoin}</button>
+                <a href="https://github.com/adiking4804/ijwi-ai" target="_blank" style={{
+                  padding: "13px 30px", borderRadius: 9, border: `1px solid ${C.border}`,
+                  backgroundColor: "transparent", color: C.white, fontSize: 15, fontWeight: 600,
+                  textDecoration: "none", display: "flex", alignItems: "center", gap: 8,
+                }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill={C.white}><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                  GitHub
+                </a>
+              </div>
+            </FadeIn>
+
+            <div style={{ position: "absolute", bottom: 28, animation: "float 2.5s ease infinite" }}>
+              <div style={{ width: 22, height: 36, borderRadius: 11, border: `2px solid ${C.dimmer}`, display: "flex", justifyContent: "center", paddingTop: 7 }}>
+                <div style={{ width: 3, height: 7, borderRadius: 2, backgroundColor: C.dim }} />
+              </div>
+            </div>
+          </section>
+
+          {/* TICKER */}
+          <div style={{
+            borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`,
+            backgroundColor: C.bgSub, overflow: "hidden", padding: "12px 0",
+          }}>
+            <div style={{ display: "flex", animation: "tickerScroll 25s linear infinite", width: "max-content" }}>
+              {[...DEAD_COMPANIES, ...DEAD_COMPANIES, ...DEAD_COMPANIES, ...DEAD_COMPANIES].map((c, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginRight: 40, whiteSpace: "nowrap" }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: C.white, fontFamily: "'JetBrains Mono', monospace" }}>{c.name}</span>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: C.red, fontFamily: "'JetBrains Mono', monospace" }}>{c.drop}</span>
+                  <span style={{ fontSize: 10, color: C.dimmer }}>{c.sector}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* THESIS */}
+          <section id="thesis" style={{ padding: "100px 24px", maxWidth: 820, margin: "0 auto" }}>
+            <FadeIn>
+              <SectionLabel color={C.red}>{t.thesisLabel}</SectionLabel>
+              <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(26px, 4.2vw, 42px)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.025em", marginBottom: 24 }}>
+                {t.thesisH1}<br />{t.thesisH2}<br />
+                <span style={{ color: C.orange }}>{t.thesisH3}</span>
+              </h2>
+            </FadeIn>
+
+            <FadeIn delay={0.15}>
+              <p style={{ fontSize: 17, color: C.dim, lineHeight: 1.75, marginBottom: 32, maxWidth: 640 }}>
+                {t.thesisP1}
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <p style={{ fontSize: 17, color: C.dim, lineHeight: 1.75, marginBottom: 40, maxWidth: 640 }}>
+                {t.thesisP2a}<span style={{ color: C.white, fontWeight: 700 }}>{t.thesisP2b}</span>
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.25}>
+              <div style={{
+                padding: 28, borderRadius: 16, border: `1px solid rgba(224,125,56,0.13)`,
+                background: `linear-gradient(135deg, ${C.card} 0%, rgba(224,125,56,0.05) 100%)`,
+              }}>
+                <div style={{ fontSize: 15, color: C.orange, fontWeight: 700, marginBottom: 12 }}>{t.thesisGapTitle}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                  {[
+                    { q: t.thesisQ1, a: t.thesisA1 },
+                    { q: t.thesisQ2, a: t.thesisA2 },
+                    { q: t.thesisQ3, a: t.thesisA3 },
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "baseline" }}>
+                      <span style={{ fontSize: 14, color: C.dim, flex: 1 }}>{item.q}</span>
+                      <span style={{ fontSize: 14, fontWeight: 800, color: C.red, fontFamily: "'JetBrains Mono', monospace", minWidth: 80, textAlign: "right" }}>{item.a}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.3}>
+              <div style={{ marginTop: 40 }}>
+                <div style={{ fontSize: 13, color: C.dimmer, marginBottom: 16, fontWeight: 600 }}>{t.thesisChartLabel}</div>
+                {[
+                  { name: "Amazon Polly", af: 1, total: 30 },
+                  { name: "ElevenLabs", af: 2, total: 32 },
+                  { name: "Microsoft", af: 3, total: 60 },
+                  { name: "Google TTS", af: 5, total: 50 },
+                  { name: "Ijwi AI", af: 25, total: 25, isUs: true },
+                ].map((p, i) => (
+                  <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
+                    <div style={{ width: 100, fontSize: 12, fontWeight: 600, color: p.isUs ? C.orange : C.dimmer, textAlign: "right", fontFamily: "'JetBrains Mono', monospace" }}>{p.name}</div>
+                    <div style={{ flex: 1, height: 20, borderRadius: 4, backgroundColor: C.card, overflow: "hidden", position: "relative" }}>
+                      <div style={{
+                        height: "100%", borderRadius: 4, width: `${(p.af / p.total) * 100}%`,
+                        backgroundColor: p.isUs ? C.orange : C.dimmer, transition: "width 1.5s ease",
+                        minWidth: p.af > 0 ? 24 : 0,
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                      }}>
+                        <span style={{ fontSize: 10, fontWeight: 700, color: p.isUs ? C.bg : C.dim }}>{p.af}</span>
+                      </div>
+                    </div>
+                    <div style={{ width: 28, fontSize: 11, fontWeight: 700, color: p.isUs ? C.orange : C.dimmer, fontFamily: "'JetBrains Mono', monospace" }}>/{p.total}</div>
+                  </div>
+                ))}
+              </div>
+            </FadeIn>
+          </section>
+
+          {/* INFRASTRUCTURE */}
+          <section id="infrastructure" style={{
+            padding: "80px 24px", backgroundColor: C.bgSub,
+            borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`,
+          }}>
+            <div style={{ maxWidth: 820, margin: "0 auto" }}>
+              <FadeIn>
+                <SectionLabel color={C.teal}>{t.infraLabel}</SectionLabel>
+                <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, marginBottom: 12, letterSpacing: "-0.02em" }}>
+                  {t.infraH}
+                </h2>
+                <p style={{ fontSize: 16, color: C.dim, maxWidth: 560, lineHeight: 1.7, marginBottom: 48 }}>
+                  {t.infraP}
+                </p>
+              </FadeIn>
+
+              {/* Terminal */}
+              <FadeIn delay={0.15}>
+                <div style={{ backgroundColor: "#0C0D0E", borderRadius: 14, border: `1px solid ${C.border}`, overflow: "hidden", marginBottom: 40 }}>
+                  <div style={{ padding: "10px 16px", borderBottom: `1px solid ${C.border}`, display: "flex", gap: 6, alignItems: "center" }}>
+                    <div style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#FF5F56" }} />
+                    <div style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#FFBD2E" }} />
+                    <div style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: "#27CA40" }} />
+                    <span style={{ fontSize: 11, color: C.dimmer, marginLeft: 8, fontFamily: "'JetBrains Mono', monospace" }}>ijwi-api</span>
+                  </div>
+                  <div style={{ padding: "20px 20px 24px", overflowX: "auto" }}>
+                    <TerminalLine prompt="$" command={'curl -X POST https://api.ijwi.ai/v1/asr \\'} delay={0} />
+                    <TerminalLine prompt=" " command={'  -F "audio=@farmer_question.wav" \\'} delay={0.1} />
+                    <TerminalLine prompt=" " command={'  -F "language=rw"'} delay={0.2} />
+                    <div style={{ height: 12 }} />
+                    <TerminalLine prompt={"\u2192"} command="" output={'{ "text": "Ndashaka kumenya igiciro cy\u2019ibirayi", "confidence": 0.94 }'} delay={0.4} />
+                    <div style={{ height: 16 }} />
+                    <TerminalLine prompt="$" command={'curl -X POST https://api.ijwi.ai/v1/tts \\'} delay={0.6} />
+                    <TerminalLine prompt=" " command={'  -d \'{"text": "Igiciro ni amafaranga 500", "lang": "rw"}\''} delay={0.7} />
+                    <div style={{ height: 12 }} />
+                    <TerminalLine prompt={"\u2192"} command="" output={"\u2713 audio/wav \u2014 2.3s \u2014 Kinyarwanda (Standard)"} delay={0.9} />
+                  </div>
+                </div>
+              </FadeIn>
+
+              {/* Flow */}
+              <FadeIn delay={0.2}>
+                <div className="flow-row" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, flexWrap: "wrap", marginBottom: 48 }}>
+                  {[
+                    { icon: "\uD83D\uDDE3\uFE0F", label: t.infraFlowSpeaker, sub: "Kinyarwanda" },
+                    { icon: "\u2192", isArrow: true },
+                    { icon: "\uD83C\uDFA4", label: "Ijwi ASR", sub: "/v1/asr", highlight: true },
+                    { icon: "\u2192", isArrow: true },
+                    { icon: "\uD83E\uDD16", label: t.infraFlowAgent, sub: "Claude / GPT" },
+                    { icon: "\u2192", isArrow: true },
+                    { icon: "\uD83D\uDD0A", label: "Ijwi TTS", sub: "/v1/tts", highlight: true },
+                    { icon: "\u2192", isArrow: true },
+                    { icon: "\uD83D\uDC42", label: t.infraFlowSpeaker, sub: t.infraFlowHears },
+                  ].map((item, i) => item.isArrow ? (
+                    <div key={i} className="flow-arrow" style={{ fontSize: 18, color: C.dimmer, padding: "0 6px" }}>{item.icon}</div>
+                  ) : (
+                    <div key={i} style={{
+                      textAlign: "center", padding: "14px 12px", minWidth: 80,
+                      backgroundColor: item.highlight ? `rgba(224,125,56,0.07)` : "transparent",
+                      border: item.highlight ? `1px solid rgba(224,125,56,0.2)` : "1px solid transparent",
+                      borderRadius: 10,
+                    }}>
+                      <div style={{ fontSize: 22, marginBottom: 4 }}>{item.icon}</div>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: item.highlight ? C.orange : C.white }}>{item.label}</div>
+                      <div style={{ fontSize: 10, color: C.dimmer, fontFamily: item.sub?.startsWith("/") ? "'JetBrains Mono', monospace" : "inherit" }}>{item.sub}</div>
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+
+              {/* Three pillars */}
+              <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
+                {[
+                  { icon: "\uD83C\uDFA4", title: t.infraSTT, desc: t.infraSTTDesc, color: C.orange },
+                  { icon: "\uD83D\uDD0A", title: t.infraTTS, desc: t.infraTTSDesc, color: C.teal },
+                  { icon: "\uD83D\uDD04", title: t.infraTranslation, desc: t.infraTranslationDesc, color: C.gold },
+                ].map((p, i) => (
+                  <FadeIn key={i} delay={i * 0.1}>
+                    <div style={{ padding: 24, backgroundColor: C.card, borderRadius: 14, border: `1px solid ${C.border}`, height: "100%" }}>
+                      <div style={{ fontSize: 28, marginBottom: 10 }}>{p.icon}</div>
+                      <div style={{ fontSize: 16, fontWeight: 800, color: p.color, marginBottom: 8 }}>{p.title}</div>
+                      <div style={{ fontSize: 13, color: C.dim, lineHeight: 1.6 }}>{p.desc}</div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* QUOTE */}
+          <section style={{ padding: "80px 24px", textAlign: "center", maxWidth: 700, margin: "0 auto" }}>
+            <FadeIn>
+              <div style={{ fontSize: "clamp(20px, 3.2vw, 30px)", fontWeight: 300, fontStyle: "italic", lineHeight: 1.6, color: C.dim, marginBottom: 20 }}>
+                {t.quoteText}
+              </div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: C.white }}>Satya Nadella</div>
+              <div style={{ fontSize: 12, color: C.dimmer }}>{t.quoteSub}</div>
+              <div style={{ marginTop: 24, padding: "12px 20px", display: "inline-block", borderRadius: 10, backgroundColor: C.card, border: `1px solid ${C.border}` }}>
+                <span style={{ fontSize: 13, color: C.orange, fontWeight: 600 }}>{t.quoteCaption}</span>
+              </div>
+            </FadeIn>
+          </section>
+
+          {/* MARKET */}
+          <section style={{ padding: "80px 24px", backgroundColor: C.bgSub, borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}` }}>
+            <div style={{ maxWidth: 820, margin: "0 auto" }}>
+              <FadeIn>
+                <SectionLabel color={C.gold}>{t.marketLabel}</SectionLabel>
+                <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(24px, 3.5vw, 34px)", fontWeight: 800, marginBottom: 40, letterSpacing: "-0.02em" }}>
+                  {t.marketH}
+                </h2>
+              </FadeIn>
+              <div className="stats-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 14 }}>
+                {[
+                  { value: <AnimCount target={67} prefix="$" suffix="B" />, label: t.marketMobile, color: C.gold },
+                  { value: "89%", label: t.marketUSSD, color: C.red },
+                  { value: <AnimCount target={1400} suffix="M" />, label: t.marketPeople, color: C.white },
+                  { value: <AnimCount target={2000} suffix="+" />, label: t.marketLangs, color: C.orange },
+                  { value: "<10", label: t.marketSupported, color: C.red },
+                  { value: "0", label: t.marketAgents, color: C.red },
+                ].map((s, i) => (
+                  <FadeIn key={i} delay={i * 0.05}>
+                    <div style={{ padding: 22, backgroundColor: C.card, borderRadius: 12, border: `1px solid ${C.border}`, textAlign: "center" }}>
+                      <div style={{ fontSize: 28, fontWeight: 800, fontFamily: "'Syne', sans-serif", color: s.color, marginBottom: 6 }}>{s.value}</div>
+                      <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.4 }}>{s.label}</div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* LANGUAGES */}
+          <section id="languages" style={{ padding: "80px 24px", maxWidth: 820, margin: "0 auto" }}>
+            <FadeIn>
+              <SectionLabel color={C.teal}>{t.langsLabel}</SectionLabel>
+              <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(24px, 3.5vw, 34px)", fontWeight: 800, marginBottom: 40 }}>
+                {t.langsH}
+              </h2>
+            </FadeIn>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {LANGS_DATA.map((l, i) => {
+                const statusLabel = LANG_STATUS[lang][l.status];
+                return (
+                <FadeIn key={i} delay={i * 0.08}>
+                  <div style={{
+                    display: "flex", alignItems: "center", gap: 14, padding: "16px 18px",
+                    backgroundColor: C.card, borderRadius: 12, border: `1px solid ${C.border}`,
+                    opacity: l.status === "Soon" ? 0.45 : 1,
+                  }}>
+                    <span style={{ fontSize: 28 }}>{l.flag}</span>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                        <span style={{ fontSize: 15, fontWeight: 700 }}>
+                          {l.name} <span style={{ fontSize: 12, fontWeight: 400, color: C.dim }}>&middot; {l.speakers}</span>
+                        </span>
+                        <span style={{
+                          fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 4,
+                          fontFamily: "'JetBrains Mono', monospace",
+                          color: l.status === "Active" ? C.green : l.status === "Collecting" ? C.gold : C.dimmer,
+                          backgroundColor: l.status === "Active" ? "rgba(52,199,89,0.08)" : l.status === "Collecting" ? "rgba(212,160,23,0.08)" : "rgba(74,71,64,0.08)",
+                        }}>{statusLabel}</span>
+                      </div>
+                      <div style={{ height: 5, borderRadius: 3, backgroundColor: C.bg }}>
+                        <div style={{ height: "100%", borderRadius: 3, backgroundColor: C.orange, width: `${l.pct}%`, transition: "width 1.5s ease" }} />
+                      </div>
+                    </div>
+                    <div style={{ fontSize: 14, fontWeight: 800, color: C.orange, minWidth: 36, textAlign: "right", fontFamily: "'JetBrains Mono', monospace" }}>{l.pct}%</div>
+                  </div>
+                </FadeIn>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* COLLECT */}
+          <section id="collect" style={{
+            padding: "80px 24px", backgroundColor: C.bgSub,
+            borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`,
+          }}>
+            <div style={{ maxWidth: 820, margin: "0 auto" }}>
+              <FadeIn>
+                <SectionLabel color={C.orange}>{t.collectLabel}</SectionLabel>
+                <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(26px, 4vw, 38px)", fontWeight: 800, marginBottom: 12 }}>{t.collectH}</h2>
+                <p style={{ fontSize: 16, color: C.dim, maxWidth: 520, lineHeight: 1.7, marginBottom: 40 }}>
+                  {t.collectP}
+                </p>
+              </FadeIn>
+              <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", gap: 12 }}>
+                {[
+                  { icon: "\uD83C\uDFA4", title: t.collectRecord, desc: t.collectRecordDesc },
+                  { icon: "\uD83D\uDD25", title: t.collectStreaks, desc: t.collectStreaksDesc },
+                  { icon: "\uD83C\uDFC6", title: t.collectLeaderboards, desc: t.collectLeaderboardsDesc },
+                  { icon: "\u2B50", title: t.collectBadges, desc: t.collectBadgesDesc },
+                  { icon: "\uD83C\uDFAF", title: t.collectChallenges, desc: t.collectChallengesDesc },
+                  { icon: "\u2705", title: t.collectValidate, desc: t.collectValidateDesc },
+                ].map((f, i) => (
+                  <FadeIn key={i} delay={i * 0.06}>
+                    <div style={{ padding: 22, backgroundColor: C.card, borderRadius: 12, border: `1px solid ${C.border}`, textAlign: "center", height: "100%" }}>
+                      <div style={{ fontSize: 28, marginBottom: 8 }}>{f.icon}</div>
+                      <div style={{ fontSize: 14, fontWeight: 800, marginBottom: 6 }}>{f.title}</div>
+                      <div style={{ fontSize: 12, color: C.dim, lineHeight: 1.5 }}>{f.desc}</div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+              <FadeIn delay={0.4}>
+                <div style={{
+                  marginTop: 32, padding: 28, borderRadius: 14, textAlign: "center",
+                  border: `1px dashed rgba(224,125,56,0.2)`, backgroundColor: "rgba(224,125,56,0.03)",
+                }}>
+                  <div style={{ fontSize: 14, fontWeight: 700, color: C.orange, marginBottom: 4 }}>{"\uD83D\uDCF1"} {t.collectComing}</div>
+                  <div style={{ fontSize: 13, color: C.dim }}>{t.collectBuiltWith}</div>
+                </div>
+              </FadeIn>
+            </div>
+          </section>
+
+          {/* FLYWHEEL */}
+          <section style={{ padding: "80px 24px", maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
+            <FadeIn>
+              <SectionLabel color={C.orange}>{t.flywheelLabel}</SectionLabel>
+              <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(24px, 3.5vw, 34px)", fontWeight: 800, marginBottom: 40 }}>
+                {t.flywheelH}
+              </h2>
+            </FadeIn>
+            <div style={{ display: "flex", flexDirection: "column", gap: 0, alignItems: "center" }}>
+              {[
+                { step: "01", title: t.fw1Title, desc: t.fw1Desc, color: C.orange },
+                { step: "02", title: t.fw2Title, desc: t.fw2Desc, color: C.teal },
+                { step: "03", title: t.fw3Title, desc: t.fw3Desc, color: C.gold },
+                { step: "04", title: t.fw4Title, desc: t.fw4Desc, color: C.green },
+                { step: "05", title: t.fw5Title, desc: t.fw5Desc, color: C.orange },
+              ].map((s, i) => (
+                <FadeIn key={i} delay={i * 0.08}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 6 }}>
+                    <div style={{
+                      width: 40, height: 40, borderRadius: 20, border: `2px solid ${s.color}44`,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontSize: 13, fontWeight: 800, color: s.color, fontFamily: "'JetBrains Mono', monospace",
+                      flexShrink: 0,
+                    }}>{s.step}</div>
+                    <div style={{ textAlign: "left" }}>
+                      <div style={{ fontSize: 15, fontWeight: 700, color: C.white }}>{s.title}</div>
+                      <div style={{ fontSize: 12, color: C.dim }}>{s.desc}</div>
+                    </div>
+                  </div>
+                  {i < 4 && <div style={{ width: 2, height: 20, backgroundColor: C.border, marginLeft: 19 }} />}
+                </FadeIn>
+              ))}
+            </div>
+          </section>
+
+          {/* DATA GOVERNANCE */}
+          <section style={{
+            padding: "80px 24px", backgroundColor: C.bgSub,
+            borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`,
+          }}>
+            <div style={{ maxWidth: 700, margin: "0 auto" }}>
+              <FadeIn>
+                <SectionLabel color={C.gold}>{t.govLabel}</SectionLabel>
+                <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(24px, 3.5vw, 34px)", fontWeight: 800, marginBottom: 12 }}>
+                  {t.govH}
+                </h2>
+                <p style={{ fontSize: 15, color: C.dim, lineHeight: 1.7, marginBottom: 32, maxWidth: 500 }}>
+                  {t.govP}
+                </p>
+              </FadeIn>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {[
+                  { icon: "\u2705", text: t.govR1, color: C.teal },
+                  { icon: "\uD83D\uDCB0", text: t.govR2, color: C.gold },
+                  { icon: "\uD83D\uDD04", text: t.govR3, color: C.orange },
+                  { icon: "\uD83D\uDD12", text: t.govR4, color: C.white },
+                  { icon: "\uD83D\uDCDC", text: t.govR5, color: C.white },
+                ].map((r, i) => (
+                  <FadeIn key={i} delay={i * 0.06}>
+                    <div style={{
+                      display: "flex", alignItems: "center", gap: 12, padding: "12px 16px",
+                      backgroundColor: C.card, borderRadius: 9, border: `1px solid ${C.border}`,
+                    }}>
+                      <span style={{ fontSize: 18 }}>{r.icon}</span>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: r.color }}>{r.text}</span>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ECOSYSTEM */}
+          <section style={{ padding: "60px 24px", maxWidth: 700, margin: "0 auto", textAlign: "center" }}>
+            <FadeIn>
+              <div style={{ fontSize: 13, color: C.dimmer, fontWeight: 600, marginBottom: 20 }}>{t.ecoLabel}</div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 20, flexWrap: "wrap", marginBottom: 24 }}>
+                {["Masakhane", "Digital Umuganda", "Mbaza NLP", "Mozilla Common Voice"].map((p, i) => (
+                  <span key={i} style={{ fontSize: 13, fontWeight: 600, color: C.dim }}>{p}</span>
+                ))}
+              </div>
+              <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap" }}>
+                {["Whisper", "Meta MMS", "VITS", "FastAPI", "React Native", "Supabase", "Python"].map((tt, i) => (
+                  <span key={i} style={{
+                    fontSize: 11, fontWeight: 600, color: C.dimmer, padding: "5px 12px",
+                    borderRadius: 5, border: `1px solid ${C.border}`, fontFamily: "'JetBrains Mono', monospace",
+                  }}>{tt}</span>
+                ))}
+              </div>
+            </FadeIn>
+          </section>
+
+          {/* WAITLIST */}
+          <section id="waitlist" style={{
+            padding: "100px 24px", textAlign: "center",
+            background: `radial-gradient(ellipse at 50% 100%, ${C.orangeGlow} 0%, transparent 50%), ${C.bgSub}`,
+            borderTop: `1px solid ${C.border}`,
+          }}>
+            <FadeIn>
+              <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(28px, 4.5vw, 44px)", fontWeight: 800, marginBottom: 12 }}>
+                {t.waitH}
+              </h2>
+              <p style={{ fontSize: 15, color: C.dim, maxWidth: 460, margin: "0 auto 28px", lineHeight: 1.6 }}>
+                {t.waitP}
+              </p>
+            </FadeIn>
+
+            {!submitted ? (
+              <form onSubmit={handleWaitlist}
+                style={{ display: "flex", gap: 10, maxWidth: 420, margin: "0 auto", flexWrap: "wrap", justifyContent: "center" }}>
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+                  placeholder={t.waitPlaceholder} required
+                  style={{
+                    flex: 1, minWidth: 220, padding: "13px 16px", borderRadius: 9,
+                    border: `1px solid ${C.border}`, backgroundColor: C.card, color: C.white,
+                    fontSize: 14, fontFamily: "'Outfit', sans-serif", outline: "none",
+                  }} />
+                <button type="submit" disabled={submitting} style={{
+                  padding: "13px 24px", borderRadius: 9, border: "none",
+                  backgroundColor: submitting ? C.dimmer : C.orange, color: C.bg, fontSize: 14,
+                  fontWeight: 700, cursor: submitting ? "wait" : "pointer", fontFamily: "'Outfit', sans-serif",
+                  transition: "background-color 0.2s",
+                }}>{submitting ? t.waitBtnLoading : t.waitBtn}</button>
+              </form>
+            ) : (
+              <div style={{
+                display: "inline-flex", alignItems: "center", gap: 10, padding: "14px 24px",
+                backgroundColor: "rgba(42,161,152,0.08)", borderRadius: 10, border: `1px solid rgba(42,161,152,0.2)`,
+              }}>
+                <span style={{ fontSize: 20 }}>{"\uD83C\uDF89"}</span>
+                <span style={{ fontSize: 15, fontWeight: 700, color: C.teal }}>{t.waitSuccess}</span>
+              </div>
+            )}
+            <div style={{ marginTop: 16, fontSize: 12, color: C.dimmer }}>{t.waitDisclaimer}</div>
+          </section>
+
+          {/* FOOTER */}
+          <footer style={{
+            padding: "40px 24px", display: "flex", justifyContent: "space-between", alignItems: "center",
+            maxWidth: 820, margin: "0 auto", flexWrap: "wrap", gap: 12,
+          }}>
+            <div>
+              <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 16, fontWeight: 800 }}>
+                ijwi<span style={{ color: C.orange }}>.</span>ai
+              </div>
+              <div style={{ fontSize: 11, color: C.dimmer }}>{t.footerTag}</div>
+            </div>
+            <div style={{ display: "flex", gap: 16 }}>
+              <a href="https://github.com/adiking4804/ijwi-ai" target="_blank" style={{ fontSize: 12, fontWeight: 500, color: C.dim }}>GitHub</a>
+              <a href="https://masakhane.io" target="_blank" style={{ fontSize: 12, fontWeight: 500, color: C.dim }}>Masakhane</a>
+              <a href="mailto:awadi@ijwi-ai.com" style={{ fontSize: 12, fontWeight: 500, color: C.dim }}>Contact</a>
+            </div>
+          </footer>
+          <div style={{ textAlign: "center", padding: "12px 24px 28px", fontSize: 11, color: C.dimmer }}>
+            {t.footerCopy}
+          </div>
+        </div>
+        </LangCtx.Provider>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
