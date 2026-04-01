@@ -279,33 +279,37 @@
       max-width: 800px;
       padding: 0 24px;
     }
-    .hero-quote {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: rgba(255,255,255,0.7);
-      font-style: italic;
-      margin-bottom: 24px;
-      font-weight: 300;
-      line-height: 1.6;
-    }
-    .hero-title {
-      font-size: clamp(36px, 6vw, 64px);
+    .hero-headline {
+      font-size: clamp(32px, 5vw, 56px);
       font-weight: 800;
       color: #fff;
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: -1.5px;
+      margin-bottom: 28px;
+    }
+    .hero-mission {
+      font-size: clamp(20px, 3vw, 28px);
+      font-weight: 700;
+      color: var(--orange);
       margin-bottom: 24px;
+      line-height: 1.3;
     }
-    .hero-subtitle {
-      font-size: clamp(16px, 2vw, 20px);
-      color: rgba(255,255,255,0.8);
+    .hero-body {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: rgba(255,255,255,0.75);
       font-weight: 400;
-      margin-bottom: 40px;
-      line-height: 1.6;
+      margin-bottom: 28px;
+      line-height: 1.7;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .hero-subtitle em {
-      color: var(--orange-light);
-      font-style: normal;
-      font-weight: 600;
+    .hero-tagline {
+      font-size: clamp(17px, 2.2vw, 22px);
+      font-weight: 700;
+      color: var(--teal-light);
+      margin-bottom: 40px;
+      line-height: 1.4;
     }
     .hero-buttons {
       display: flex;
@@ -337,6 +341,11 @@
       backdrop-filter: blur(8px);
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .btn-teal {
+      background: var(--teal);
+      color: #fff;
+    }
+    .btn-teal:hover { background: var(--teal-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27, 122, 110, 0.3); }
     .btn svg { width: 20px; height: 20px; }
 
     /* ══════════════════════════════════════════════
@@ -921,15 +930,16 @@
       </video>
     </div>
     <div class="hero-content">
-      <p class="hero-quote reveal" data-i18n="heroQuote">"My son was born in Belgium. He doesn't speak Kinyarwanda."</p>
-      <h1 class="hero-title reveal" style="transition-delay:100ms" data-i18n="heroTitle">So I built <span style="color:var(--orange-light)">Ijwi AI</span> &mdash; the voice layer for Africa.</h1>
-      <p class="hero-subtitle reveal" style="transition-delay:200ms" data-i18n="heroSubtitle">Learn your heritage language. Contribute your voice. <em data-i18n="heroEm">Every language deserves to be heard.</em></p>
-      <div class="hero-buttons reveal" style="transition-delay:300ms">
+      <h1 class="hero-headline reveal" data-i18n="heroHeadline">"My son was born in Belgium.<br>He doesn't speak Kinyarwanda."</h1>
+      <p class="hero-mission reveal" style="transition-delay:500ms" data-i18n="heroMission">So I built Ijwi AI &mdash; the voice layer for Africa.</p>
+      <p class="hero-body reveal" style="transition-delay:1000ms" data-i18n="heroBody">Diaspora families learn their heritage language. Native speakers contribute their voice. Together, we're building voice AI for 2,000+ African languages that have never been heard by technology.</p>
+      <p class="hero-tagline reveal" style="transition-delay:1500ms" data-i18n="heroTagline">Every lesson trains AI. Every voice builds the future.</p>
+      <div class="hero-buttons reveal" style="transition-delay:2000ms">
         <a href="#download" class="btn btn-primary">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           <span data-i18n="heroIOS">Download for iOS</span>
         </a>
-        <a href="#download" class="btn btn-secondary">
+        <a href="#download" class="btn btn-teal">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 2.406l-3.73 6.462h7.294l-3.564-6.462zm-5.79 0L2.007 18.406h6.26L14.6 8.868l-2.867-6.462zm-6.3 10.93L2.007 21.594h7.294l-3.867-8.258zm11.79 0l-3.867 8.258h7.294l3.426-8.258h-6.853z"/></svg>
           <span data-i18n="heroAndroid">Download for Android</span>
         </a>
@@ -1191,9 +1201,10 @@
         navSolution: "Solution",
         navHow: "How It Works",
         navDownload: "Download",
-        heroQuote: '"My son was born in Belgium. He doesn\'t speak Kinyarwanda."',
-        heroTitle: 'So I built <span style="color:var(--orange-light)">Ijwi AI</span> &mdash; the voice layer for Africa.',
-        heroSubtitle: 'Learn your heritage language. Contribute your voice. <em>Every language deserves to be heard.</em>',
+        heroHeadline: '"My son was born in Belgium.<br>He doesn\'t speak Kinyarwanda."',
+        heroMission: 'So I built Ijwi AI &mdash; the voice layer for Africa.',
+        heroBody: 'Diaspora families learn their heritage language. Native speakers contribute their voice. Together, we\'re building voice AI for 2,000+ African languages that have never been heard by technology.',
+        heroTagline: 'Every lesson trains AI. Every voice builds the future.',
         heroIOS: "Download for iOS",
         heroAndroid: "Download for Android",
         problemLabel: "The Problem",
@@ -1250,9 +1261,10 @@
         navSolution: "Solution",
         navHow: "Comment \u00e7a marche",
         navDownload: "T\u00e9l\u00e9charger",
-        heroQuote: '"Mon fils est n\u00e9 en Belgique. Il ne parle pas kinyarwanda."',
-        heroTitle: 'Alors j\'ai cr\u00e9\u00e9 <span style="color:var(--orange-light)">Ijwi AI</span> &mdash; la couche vocale pour l\'Afrique.',
-        heroSubtitle: 'Apprenez votre langue d\'h\u00e9ritage. Contribuez votre voix. <em>Chaque langue m\u00e9rite d\'\u00eatre entendue.</em>',
+        heroHeadline: '"Mon fils est n\u00e9 en Belgique.<br>Il ne parle pas Kinyarwanda."',
+        heroMission: 'J\'ai donc cr\u00e9\u00e9 Ijwi AI &mdash; la couche vocale pour l\'Afrique.',
+        heroBody: 'Les familles de la diaspora apprennent leur langue maternelle. Les locuteurs natifs contribuent leur voix. Ensemble, nous construisons l\'IA vocale pour plus de 2 000 langues africaines que la technologie n\'a jamais entendues.',
+        heroTagline: 'Chaque le\u00e7on entra\u00eene l\'IA. Chaque voix construit l\'avenir.',
         heroIOS: "T\u00e9l\u00e9charger pour iOS",
         heroAndroid: "T\u00e9l\u00e9charger pour Android",
         problemLabel: "Le Probl\u00e8me",
@@ -1309,9 +1321,10 @@
         navSolution: "Oplossing",
         navHow: "Hoe Het Werkt",
         navDownload: "Downloaden",
-        heroQuote: '"Mijn zoon is geboren in Belgi\u00eb. Hij spreekt geen Kinyarwanda."',
-        heroTitle: 'Dus bouwde ik <span style="color:var(--orange-light)">Ijwi AI</span> &mdash; de spraaklaag voor Afrika.',
-        heroSubtitle: 'Leer je erfgoedtaal. Draag je stem bij. <em>Elke taal verdient gehoord te worden.</em>',
+        heroHeadline: '"Mijn zoon is geboren in Belgi\u00eb.<br>Hij spreekt geen Kinyarwanda."',
+        heroMission: 'Dus bouwde ik Ijwi AI &mdash; de spraaklaag voor Afrika.',
+        heroBody: 'Diasporafamilies leren hun moedertaal. Moedertaalsprekers dragen hun stem bij. Samen bouwen we spraak-AI voor meer dan 2.000 Afrikaanse talen die nooit eerder door technologie zijn gehoord.',
+        heroTagline: 'Elke les traint AI. Elke stem bouwt de toekomst.',
         heroIOS: "Download voor iOS",
         heroAndroid: "Download voor Android",
         problemLabel: "Het Probleem",
