@@ -6,13 +6,18 @@
   <title>Ijwi AI — The Voice Layer for Africa</title>
   <meta name="description" content="Ijwi AI builds voice technology for African languages. Learn your heritage language. Contribute your voice. Every language deserves to be heard." />
   <meta property="og:title" content="Ijwi AI — The Voice Layer for Africa" />
-  <meta property="og:description" content="My son was born in Belgium. He doesn't speak Kinyarwanda. So I built Ijwi AI." />
+  <meta property="og:description" content="Building voice AI for 2,000+ African languages" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.ijwi-ai.com" />
+  <meta property="og:image" content="https://www.ijwi-ai.com/og-image.png" />
+  <meta property="og:image:width" content="2730" />
+  <meta property="og:image:height" content="1536" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Ijwi AI — The Voice Layer for Africa" />
-  <meta name="twitter:description" content="The voice layer for Africa. Learn your heritage language. Contribute your voice." />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>" />
+  <meta name="twitter:description" content="Building voice AI for 2,000+ African languages" />
+  <meta name="twitter:image" content="https://www.ijwi-ai.com/og-image.png" />
+  <link rel="icon" type="image/png" href="/app-icon.png" />
+  <link rel="apple-touch-icon" href="/app-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -898,7 +903,7 @@
         <li><a href="#problem" data-i18n="navProblem">Problem</a></li>
         <li><a href="#solution" data-i18n="navSolution">Solution</a></li>
         <li><a href="#how-it-works" data-i18n="navHow">How It Works</a></li>
-        <li><a href="#download" data-i18n="navDownload">Download</a></li>
+        <li><a href="#newsletter" data-i18n="navDownload">Waitlist</a></li>
       </ul>
       <div style="display:flex;align-items:center;gap:16px;">
         <div class="nav-lang" role="group" aria-label="Language selector">
@@ -919,14 +924,14 @@
     <a href="#problem" data-i18n="navProblem" class="mobile-nav-link">Problem</a>
     <a href="#solution" data-i18n="navSolution" class="mobile-nav-link">Solution</a>
     <a href="#how-it-works" data-i18n="navHow" class="mobile-nav-link">How It Works</a>
-    <a href="#download" data-i18n="navDownload" class="mobile-nav-link">Download</a>
+    <a href="#newsletter" data-i18n="navDownload" class="mobile-nav-link">Waitlist</a>
   </div>
 
   <!-- ══════ HERO ══════ -->
   <section class="hero" id="hero">
     <div class="hero-video-wrap">
       <video autoplay muted loop playsinline preload="metadata" poster="">
-        <source src="public/hero-africa-map.mp4" type="video/mp4" />
+        <source src="/hero-africa-map.mp4" type="video/mp4" />
       </video>
     </div>
     <div class="hero-content">
@@ -935,13 +940,8 @@
       <p class="hero-body reveal" style="transition-delay:1000ms" data-i18n="heroBody">Diaspora families learn their heritage language. Native speakers contribute their voice. Together, we're building voice AI for 2,000+ African languages that have never been heard by technology.</p>
       <p class="hero-tagline reveal" style="transition-delay:1500ms" data-i18n="heroTagline">Every lesson trains AI. Every voice builds the future.</p>
       <div class="hero-buttons reveal" style="transition-delay:2000ms">
-        <a href="#download" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <span data-i18n="heroIOS">Download for iOS</span>
-        </a>
-        <a href="#download" class="btn btn-teal">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 2.406l-3.73 6.462h7.294l-3.564-6.462zm-5.79 0L2.007 18.406h6.26L14.6 8.868l-2.867-6.462zm-6.3 10.93L2.007 21.594h7.294l-3.867-8.258zm11.79 0l-3.867 8.258h7.294l3.426-8.258h-6.853z"/></svg>
-          <span data-i18n="heroAndroid">Download for Android</span>
+        <a href="#newsletter" class="btn btn-primary">
+          <span data-i18n="heroWaitlist">Join the Waitlist</span>
         </a>
       </div>
     </div>
@@ -954,11 +954,11 @@
       <h2 class="section-title reveal" style="color:#fff" data-i18n="problemTitle">Africa's languages are invisible to AI.</h2>
       <div class="problem-stats stagger">
         <div class="stat-card reveal" style="--i:0">
-          <div class="stat-number" data-count="2000">0</div>
+          <div class="stat-number" data-count="2000">2,000+</div>
           <div class="stat-label" data-i18n="stat1">African languages spoken daily</div>
         </div>
         <div class="stat-card reveal" style="--i:1">
-          <div class="stat-number" data-count="67" data-prefix="$" data-suffix="B">$0B</div>
+          <div class="stat-number" data-count="67" data-prefix="$" data-suffix="B">$67B</div>
           <div class="stat-label" data-i18n="stat2">Mobile money market by 2030</div>
         </div>
         <div class="stat-card reveal" style="--i:2">
@@ -976,7 +976,7 @@
       <div class="solution-wrap">
         <div class="solution-video">
           <video autoplay muted loop playsinline preload="metadata">
-            <source src="public/soundwaves-to-data.mp4" type="video/mp4" />
+            <source src="/soundwaves-to-data.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="solution-content">
@@ -1006,7 +1006,7 @@
 
   <!-- ══════ TEACH YOUR CHILD ══════ -->
   <section class="section teach" id="teach">
-    <div class="teach-bg-img"><img src="public/teach-illustration.png" alt="" loading="lazy" width="2730" height="1536" /></div>
+    <div class="teach-bg-img"><img src="/teach-illustration.png" alt="" loading="lazy" width="2730" height="1536" /></div>
     <div class="container" style="text-align:center">
       <div class="section-label reveal" style="color:rgba(255,255,255,0.7)" data-i18n="teachLabel">The Bridge</div>
       <h2 class="teach-headline reveal" data-i18n="teachTitle">Three generations. Two continents. One language.</h2>
@@ -1042,7 +1042,7 @@
   <section class="section section-dark flywheel" id="how-it-works">
     <div class="flywheel-video">
       <video autoplay muted loop playsinline preload="metadata">
-        <source src="public/flywheel-rotation.mp4" type="video/mp4" />
+        <source src="/flywheel-rotation.mp4" type="video/mp4" />
       </video>
     </div>
     <div class="container flywheel-content" style="text-align:center">
@@ -1070,15 +1070,15 @@
       <h2 class="section-title reveal" data-i18n="tractionTitle">Building in public.</h2>
       <div class="traction-grid stagger">
         <div class="traction-card reveal" style="--i:0">
-          <div class="traction-number" data-count="102">0</div>
+          <div class="traction-number" data-count="102">102+</div>
           <div class="traction-label" data-i18n="trac1">Prompts</div>
         </div>
         <div class="traction-card reveal" style="--i:1">
-          <div class="traction-number" data-count="2">0</div>
+          <div class="traction-number" data-count="2">2</div>
           <div class="traction-label" data-i18n="trac2">Languages</div>
         </div>
         <div class="traction-card reveal" style="--i:2">
-          <div class="traction-number" data-count="6">0</div>
+          <div class="traction-number" data-count="6">6</div>
           <div class="traction-label" data-i18n="trac3">Categories</div>
         </div>
         <div class="traction-card reveal" style="--i:3">
@@ -1086,7 +1086,7 @@
           <div class="traction-label" data-i18n="trac4">Mode supported</div>
         </div>
         <div class="traction-card reveal" style="--i:4">
-          <div class="traction-number" data-count="42">0</div>
+          <div class="traction-number" data-count="42">42</div>
           <div class="traction-label" data-i18n="trac5">Tests passing</div>
         </div>
       </div>
@@ -1099,7 +1099,7 @@
       <div class="section-label reveal" data-i18n="edgeLabel">Competitive Edge</div>
       <div class="edge-numbers">
         <div class="edge-stat reveal" style="transition-delay:0ms">
-          <div class="num" data-count="2384">0</div>
+          <div class="num" data-count="2384">2,384+</div>
           <div class="label" data-i18n="edge1">Hours of read speech exist</div>
         </div>
         <div class="edge-stat reveal" style="transition-delay:100ms">
@@ -1113,7 +1113,7 @@
 
   <!-- ══════ ESETHU FRAMEWORK ══════ -->
   <section class="section section-cream esethu-section" id="esethu">
-    <img class="esethu-bg" src="public/esethu-illustration.png" alt="" loading="lazy" width="2730" height="1536" />
+    <img class="esethu-bg" src="/esethu-illustration.png" alt="" loading="lazy" width="2730" height="1536" />
     <div class="container">
       <div class="section-label reveal" style="color:var(--teal)" data-i18n="esethuLabel">Esethu Framework</div>
       <h2 class="section-title reveal" data-i18n="esethuTitle">African communities own their data.</h2>
@@ -1149,18 +1149,13 @@
     <div class="container">
       <h2 class="cta-title reveal" data-i18n="ctaTitle">Every language deserves a voice.</h2>
       <div class="cta-buttons reveal" style="transition-delay:100ms">
-        <a href="#" class="btn btn-primary" style="font-size:18px;padding:16px 32px;">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          <span data-i18n="ctaIOS">Download for iOS</span>
-        </a>
-        <a href="#" class="btn btn-secondary" style="font-size:18px;padding:16px 32px;">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M17.523 2.406l-3.73 6.462h7.294l-3.564-6.462zm-5.79 0L2.007 18.406h6.26L14.6 8.868l-2.867-6.462zm-6.3 10.93L2.007 21.594h7.294l-3.867-8.258zm11.79 0l-3.867 8.258h7.294l3.426-8.258h-6.853z"/></svg>
-          <span data-i18n="ctaAndroid">Download for Android</span>
+        <a href="#newsletter" class="btn btn-primary" style="font-size:18px;padding:16px 32px;">
+          <span data-i18n="ctaWaitlist">Join the Waitlist</span>
         </a>
       </div>
-      <div class="cta-divider"></div>
+      <div class="cta-divider" id="newsletter"></div>
       <p class="reveal" style="color:rgba(255,255,255,0.6);margin-bottom:20px;font-size:15px;" data-i18n="ctaNewsletter">Stay in the loop. Get updates on launch day.</p>
-      <form class="newsletter-form reveal" style="transition-delay:100ms" id="newsletterForm">
+      <form class="newsletter-form reveal" style="transition-delay:100ms" id="newsletterForm" name="newsletter">
         <input type="email" placeholder="you@example.com" required aria-label="Email address" />
         <button type="submit" data-i18n="ctaSubscribe">Subscribe</button>
       </form>
@@ -1173,8 +1168,9 @@
     <div class="footer-inner">
       <div class="footer-left">
         <strong style="color:var(--orange-light)">Ijwi AI</strong><br />
-        <a href="https://www.ijwi-ai.com">www.ijwi-ai.com</a> &middot; <a href="mailto:awadi@ijwi-ai.com">awadi@ijwi-ai.com</a><br />
-        Blankenberge, Belgium
+        <a href="mailto:awadi@ijwi-ai.com">awadi@ijwi-ai.com</a><br />
+        Blankenberge, Belgium<br />
+        &copy; 2026 Ijwi AI. All rights reserved.
       </div>
       <div class="footer-right">
         <a href="https://github.com/adiking4804" class="footer-social" aria-label="GitHub">
@@ -1200,13 +1196,12 @@
         navProblem: "Problem",
         navSolution: "Solution",
         navHow: "How It Works",
-        navDownload: "Download",
+        navDownload: "Waitlist",
         heroHeadline: '"My son was born in Belgium.<br>He doesn\'t speak Kinyarwanda."',
         heroMission: 'So I built Ijwi AI &mdash; the voice layer for Africa.',
         heroBody: 'Diaspora families learn their heritage language. Native speakers contribute their voice. Together, we\'re building voice AI for 2,000+ African languages that have never been heard by technology.',
         heroTagline: 'Every lesson trains AI. Every voice builds the future.',
-        heroIOS: "Download for iOS",
-        heroAndroid: "Download for Android",
+        heroWaitlist: "Join the Waitlist",
         problemLabel: "The Problem",
         problemTitle: "Africa's languages are invisible to AI.",
         stat1: "African languages spoken daily",
@@ -1249,8 +1244,7 @@
         esethu3Title: "Revenue Reinvested",
         esethu3Desc: "Profits flow back to the communities who contributed their voices. A virtuous cycle of growth.",
         ctaTitle: "Every language deserves a voice.",
-        ctaIOS: "Download for iOS",
-        ctaAndroid: "Download for Android",
+        ctaWaitlist: "Join the Waitlist",
         ctaNewsletter: "Stay in the loop. Get updates on launch day.",
         ctaSubscribe: "Subscribe",
         footerTagline: "Ijwi means voice in Kinyarwanda."
@@ -1260,13 +1254,12 @@
         navProblem: "Probl\u00e8me",
         navSolution: "Solution",
         navHow: "Comment \u00e7a marche",
-        navDownload: "T\u00e9l\u00e9charger",
+        navDownload: "Liste d'attente",
         heroHeadline: '"Mon fils est n\u00e9 en Belgique.<br>Il ne parle pas Kinyarwanda."',
         heroMission: 'J\'ai donc cr\u00e9\u00e9 Ijwi AI &mdash; la couche vocale pour l\'Afrique.',
         heroBody: 'Les familles de la diaspora apprennent leur langue maternelle. Les locuteurs natifs contribuent leur voix. Ensemble, nous construisons l\'IA vocale pour plus de 2 000 langues africaines que la technologie n\'a jamais entendues.',
         heroTagline: 'Chaque le\u00e7on entra\u00eene l\'IA. Chaque voix construit l\'avenir.',
-        heroIOS: "T\u00e9l\u00e9charger pour iOS",
-        heroAndroid: "T\u00e9l\u00e9charger pour Android",
+        heroWaitlist: "Rejoindre la liste d'attente",
         problemLabel: "Le Probl\u00e8me",
         problemTitle: "Les langues africaines sont invisibles pour l'IA.",
         stat1: "Langues africaines parl\u00e9es quotidiennement",
@@ -1309,8 +1302,7 @@
         esethu3Title: "Revenus R\u00e9investis",
         esethu3Desc: "Les profits reviennent aux communaut\u00e9s qui ont contribu\u00e9 leurs voix.",
         ctaTitle: "Chaque langue m\u00e9rite une voix.",
-        ctaIOS: "T\u00e9l\u00e9charger pour iOS",
-        ctaAndroid: "T\u00e9l\u00e9charger pour Android",
+        ctaWaitlist: "Rejoindre la liste d'attente",
         ctaNewsletter: "Restez inform\u00e9. Recevez les nouvelles du lancement.",
         ctaSubscribe: "S'abonner",
         footerTagline: "Ijwi signifie voix en kinyarwanda."
@@ -1320,13 +1312,12 @@
         navProblem: "Probleem",
         navSolution: "Oplossing",
         navHow: "Hoe Het Werkt",
-        navDownload: "Downloaden",
+        navDownload: "Wachtlijst",
         heroHeadline: '"Mijn zoon is geboren in Belgi\u00eb.<br>Hij spreekt geen Kinyarwanda."',
         heroMission: 'Dus bouwde ik Ijwi AI &mdash; de spraaklaag voor Afrika.',
         heroBody: 'Diasporafamilies leren hun moedertaal. Moedertaalsprekers dragen hun stem bij. Samen bouwen we spraak-AI voor meer dan 2.000 Afrikaanse talen die nooit eerder door technologie zijn gehoord.',
         heroTagline: 'Elke les traint AI. Elke stem bouwt de toekomst.',
-        heroIOS: "Download voor iOS",
-        heroAndroid: "Download voor Android",
+        heroWaitlist: "Schrijf je in op de wachtlijst",
         problemLabel: "Het Probleem",
         problemTitle: "Afrikaanse talen zijn onzichtbaar voor AI.",
         stat1: "Afrikaanse talen dagelijks gesproken",
@@ -1369,8 +1360,7 @@
         esethu3Title: "Inkomsten Her\u00efnvesteerd",
         esethu3Desc: "Winsten vloeien terug naar de gemeenschappen die hun stem hebben bijgedragen.",
         ctaTitle: "Elke taal verdient een stem.",
-        ctaIOS: "Download voor iOS",
-        ctaAndroid: "Download voor Android",
+        ctaWaitlist: "Schrijf je in op de wachtlijst",
         ctaNewsletter: "Blijf op de hoogte. Ontvang updates op de lanceerdag.",
         ctaSubscribe: "Abonneren",
         footerTagline: "Ijwi betekent stem in het Kinyarwanda."
@@ -1472,15 +1462,50 @@
 
     document.querySelectorAll("[data-count]").forEach(el => countObserver.observe(el));
 
-    /* ─── Newsletter form ─── */
-    document.getElementById("newsletterForm").addEventListener("submit", (e) => {
+    /* ─── Newsletter form (Supabase) ─── */
+    const SUPABASE_URL = "https://xbslbbjmugimyqefykjd.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhic2xiYmptdWdpbXlxZWZ5a2pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5NjQwMTMsImV4cCI6MjA4NzU0MDAxM30.sYDpeUy7IR_1BHhhb1DBOAmDA72DsNJx0c3XD71GyAg";
+
+    document.getElementById("newsletterForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const email = e.target.querySelector("input").value;
+      const input = e.target.querySelector("input");
+      const btn = e.target.querySelector("button");
       const msg = document.getElementById("newsletterMsg");
-      // Simple mailto fallback — replace with Supabase/Mailchimp endpoint
-      msg.textContent = "Thanks! We'll be in touch at " + email;
-      msg.style.color = "var(--teal-light)";
-      e.target.querySelector("input").value = "";
+      const email = input.value.trim();
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.textContent = "...";
+
+      try {
+        const res = await fetch(SUPABASE_URL + "/rest/v1/newsletter_signups", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ email })
+        });
+
+        if (res.ok) {
+          msg.textContent = "You're on the list! We'll notify you on launch day.";
+          msg.style.color = "var(--teal-light)";
+          input.value = "";
+        } else if (res.status === 409) {
+          msg.textContent = "You're already subscribed!";
+          msg.style.color = "var(--orange-light)";
+        } else {
+          throw new Error("Failed");
+        }
+      } catch {
+        msg.textContent = "Something went wrong. Try again later.";
+        msg.style.color = "#C0392B";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = T[currentLang]?.ctaSubscribe || "Subscribe";
+      }
     });
 
     /* ─── Smooth scroll for nav links ─── */
