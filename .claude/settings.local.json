@@ -2,7 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(cd ~/Downloads/ijwi-website && git init && git remote add origin https://github.com/adiking4804/ijwi-website.git)",
-      "Bash(cd ~/Downloads/ijwi-website && git add -A)"
+      "Bash(cd ~/Downloads/ijwi-website && git add -A)",
+      "Bash(cd ~/Downloads/ijwi-website && git commit -m \"$\\(cat <<'EOF'\nAdd EN/FR/NL language toggle for European diaspora\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(cd ~/Downloads/ijwi-website && git push -u origin main)",
+      "Bash(cd ~/Downloads/ijwi-website && git mv \"index \\(1\\).html\" index.html)",
+      "Bash(cd ~/Downloads/ijwi-website && git commit -m \"$\\(cat <<'EOF'\nRename index \\(1\\).html to index.html\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(cd ~/Downloads/ijwi-website && git push --force origin main)",
+      "Skill(nano-banana-2)",
+      "Bash(curl -sL \"https://cloud.inference.sh/app/files/t/3det7d54/sk5arcw9.png\" -o /Users/macdeawadi/Downloads/ijwi-website/public/og-image.png)",
+      "Bash(curl -sL \"https://cloud.inference.sh/app/files/t/3det7d54/044noz4k.png\" -o /Users/macdeawadi/Downloads/ijwi-website/public/app-icon.png)",
+      "Bash(curl -s -X POST https://xbslbbjmugimyqefykjd.supabase.co/rest/v1/newsletter_signups -H 'apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhic2xiYmptdWdpbXlxZWZ5a2pkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5NjQwMTMsImV4cCI6MjA4NzU0MDAxM30.sYDpeUy7IR_1BHhhb1DBOAmDA72DsNJx0c3XD71GyAg' -H 'Content-Type: application/json' -d '{\"email\":\"test@test.com\"}')"
     ]
   }
 }
