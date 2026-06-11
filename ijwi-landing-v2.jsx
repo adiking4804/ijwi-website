@@ -194,7 +194,7 @@ export default function IjwiLanding() {
           }}>
             <span style={{ width: 7, height: 7, borderRadius: 4, backgroundColor: C.red, animation: "pulse 1.5s infinite" }} />
             <span style={{ fontSize: 12, fontWeight: 600, color: C.dim, fontFamily: "'JetBrains Mono', monospace" }}>
-              $1T+ wiped from SaaS · Voice agents can't speak African languages
+              $1T+ wiped from SaaS · Voice agents still can't speak Kinyarwanda
             </span>
           </div>
         </FadeIn>
@@ -219,7 +219,7 @@ export default function IjwiLanding() {
             lineHeight: 1.7, marginBottom: 36, fontWeight: 400,
           }}>
             AI agents are replacing $1 trillion in SaaS. But they only work if they can
-            understand you. For 1 billion+ African language speakers, they can't.
+            understand you. For most of Africa's 1 billion+ language speakers, they still can't.
             We're building the voice infrastructure to change that.
           </p>
         </FadeIn>
@@ -314,11 +314,11 @@ export default function IjwiLanding() {
         {/* Platform comparison */}
         <FadeIn delay={0.3}>
           <div style={{ marginTop: 40 }}>
-            <div style={{ fontSize: 13, color: C.dimmer, marginBottom: 16, fontWeight: 600 }}>African language support by platform</div>
+            <div style={{ fontSize: 13, color: C.dimmer, marginBottom: 16, fontWeight: 600 }}>Indigenous African languages with a TTS voice (June 2026) — none of them speak Kinyarwanda</div>
             {[
-              { name: "Amazon Polly", af: 1, total: 30 },
-              { name: "ElevenLabs", af: 2, total: 32 },
-              { name: "Microsoft", af: 3, total: 60 },
+              { name: "Amazon Polly", af: 0, total: 41 },
+              { name: "ElevenLabs", af: 6, total: 74 },
+              { name: "Microsoft", af: 5, total: 150 },
               { name: "Google TTS", af: 5, total: 50 },
               { name: "Ijwi AI (target)", af: 25, total: 25, isUs: true },
             ].map((p, i) => (
@@ -418,7 +418,7 @@ export default function IjwiLanding() {
           {/* Three pillars */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>
             {[
-              { icon: "🎙️", title: "Speech-to-Text", desc: "Whisper fine-tuned for African languages. <15% WER on Kinyarwanda. Every agent needs ears.", color: C.orange },
+              { icon: "🎙️", title: "Speech-to-Text", desc: "Whisper fine-tuned for African languages, targeting <15% WER on Kinyarwanda. Every agent needs ears.", color: C.orange },
               { icon: "🔊", title: "Text-to-Speech", desc: "VITS/MMS models producing natural African language speech. Every agent needs a voice.", color: C.teal },
               { icon: "🔄", title: "Translation API", desc: "Real-time translation between African languages and English/French. The bridge between worlds.", color: C.gold },
             ].map((p, i) => (
@@ -469,8 +469,8 @@ export default function IjwiLanding() {
               { value: "89%", label: "USSD-only (no voice option)", color: C.red },
               { value: <AnimCount target={1400} suffix="M" />, label: "People across Africa", color: C.white },
               { value: <AnimCount target={2000} suffix="+" />, label: "African languages", color: C.orange },
-              { value: "<10", label: "Supported by any voice AI", color: C.red },
-              { value: "0", label: "Full-featured voice agents in African languages", color: C.red },
+              { value: "334h", label: "Total public African TTS data, across 11 languages", color: C.red },
+              { value: "0", label: "Voice agents that can speak Kinyarwanda", color: C.red },
             ].map((s, i) => (
               <FadeIn key={i} delay={i * 0.05}>
                 <div style={{
