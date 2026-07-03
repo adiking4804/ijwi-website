@@ -4,23 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ijwi AI — The Voice Layer for Africa</title>
-  <meta name="description" content="Ijwi AI builds voice technology for African languages. Learn your heritage language. Contribute your voice. Every language deserves to be heard." />
+  <meta name="description" content="Ijwi AI builds voice technology for African languages. Family Voice Threads turn everyday voice messages into living lessons — and into the conversational data African-language AI is missing." />
   <meta property="og:title" content="Ijwi AI — The Voice Layer for Africa" />
   <meta property="og:description" content="Building voice AI for 2,000+ African languages" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.ijwi-ai.com" />
-  <meta property="og:image" content="https://www.ijwi-ai.com/og-image.png" />
-  <meta property="og:image:width" content="2730" />
-  <meta property="og:image:height" content="1536" />
+  <meta property="og:image" content="https://www.ijwi-ai.com/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="670" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Ijwi AI — The Voice Layer for Africa" />
   <meta name="twitter:description" content="Building voice AI for 2,000+ African languages" />
-  <meta name="twitter:image" content="https://www.ijwi-ai.com/og-image.png" />
-  <link rel="icon" type="image/png" href="/app-icon.png" />
-  <link rel="apple-touch-icon" href="/app-icon.png" />
+  <meta name="twitter:image" content="https://www.ijwi-ai.com/og-image.jpg" />
+  <link rel="icon" type="image/png" href="/app-icon-256.png" />
+  <link rel="apple-touch-icon" href="/app-icon-256.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & Base ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -36,6 +36,11 @@
     a { color: inherit; text-decoration: none; }
     img, video { display: block; max-width: 100%; }
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: 2px solid var(--teal-light);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
     /* ── CSS Variables ── */
     :root {
@@ -133,6 +138,11 @@
       video { display: none; }
       .scroll-progress, .shimmer-text, .waveform, .lang-marquee-track,
       .tilt, .magnetic { animation: none !important; transform: none !important; transition: none !important; }
+      .waveform span { animation: none !important; transform: none !important; }
+      .vn-bars span, .vn-play, .hero-eyebrow .pulse-dot, .scroll-cue,
+      .thread-msg, .chip-pop { animation: none !important; }
+      .thread-msg { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .scroll-cue { display: none; }
     }
 
     /* ══════════════════════════════════════════════
@@ -143,12 +153,14 @@
       top: 0;
       left: 0;
       height: 3px;
-      width: 0%;
+      width: 100%;
+      transform: scaleX(0);
+      transform-origin: 0 50%;
       background: linear-gradient(90deg, var(--orange), var(--teal-light));
       z-index: 1100;
-      transition: width 0.08s linear;
+      transition: transform 0.08s linear;
       box-shadow: 0 0 10px rgba(212, 98, 26, 0.4);
-      will-change: width;
+      will-change: transform;
     }
 
     /* ══════════════════════════════════════════════
@@ -454,6 +466,58 @@
       max-width: 800px;
       padding: 0 24px;
     }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    .scroll-cue {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      margin-left: -12px;
+      z-index: 1;
+      width: 24px;
+      height: 38px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 14px;
+      pointer-events: none;
+    }
+    .scroll-cue::after {
+      content: '';
+      position: absolute;
+      top: 7px;
+      left: 50%;
+      width: 4px;
+      height: 8px;
+      margin-left: -2px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.6);
+      animation: scrollCue 2s ease-in-out infinite;
+    }
+    @keyframes scrollCue {
+      0%   { transform: translateY(0); opacity: 1; }
+      70%  { transform: translateY(12px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 0; }
+    }
     .hero-headline {
       font-size: clamp(32px, 5vw, 56px);
       font-weight: 800;
@@ -504,6 +568,7 @@
       min-height: 48px;
       cursor: pointer;
     }
+    .btn:active { transform: translateY(0) scale(0.97); transition-duration: 0.1s; }
     .btn-primary {
       background: var(--orange);
       color: #fff;
@@ -671,7 +736,7 @@
     .solution-tagline span { color: var(--orange-light); }
 
     /* ══════════════════════════════════════════════
-       TEACH YOUR CHILD
+       FAMILY VOICE THREADS
     ══════════════════════════════════════════════ */
     .teach {
       background: linear-gradient(135deg, #6B21A8, #D4621A);
@@ -695,48 +760,247 @@
       font-size: clamp(24px, 3.5vw, 40px);
       font-weight: 800;
       line-height: 1.2;
-      margin-bottom: 48px;
+      margin-bottom: 16px;
       letter-spacing: -0.5px;
+    }
+    .teach-sub {
+      font-size: clamp(15px, 1.6vw, 18px);
+      color: rgba(255,255,255,0.85);
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .threads-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 420px) 1fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: center;
     }
     .teach-flow {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 28px;
     }
     .teach-step {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-      flex: 0 1 200px;
+      align-items: flex-start;
+      text-align: left;
+      gap: 16px;
     }
     .teach-icon {
-      width: 72px;
-      height: 72px;
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
       background: rgba(255,255,255,0.15);
-      border-radius: 20px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
       backdrop-filter: blur(8px);
     }
-    .teach-icon svg { width: 36px; height: 36px; fill: #fff; }
+    .teach-icon svg { width: 28px; height: 28px; fill: #fff; }
     .teach-step-title {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 700;
+      margin-bottom: 2px;
     }
     .teach-step-sub {
-      font-size: 14px;
-      color: rgba(255,255,255,0.75);
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.55;
     }
-    .teach-arrow {
-      font-size: 28px;
-      color: rgba(255,255,255,0.5);
+
+    /* ── Phone mockup (pure CSS) ── */
+    .phone {
+      position: relative;
+      width: min(360px, 100%);
+      margin: 0 auto;
+      background: #111;
+      border-radius: 40px;
+      padding: 12px;
+      box-shadow:
+        0 24px 64px rgba(0,0,0,0.35),
+        0 4px 16px rgba(0,0,0,0.25),
+        inset 0 0 0 2px rgba(255,255,255,0.08);
+    }
+    .phone-screen {
+      background: #0E0B10;
+      border-radius: 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
+    }
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 16px 14px;
+      background: rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .chat-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), #6B21A8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
       flex-shrink: 0;
     }
+    .chat-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .chat-status {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+    .chat-body {
+      flex: 1;
+      padding: 18px 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .chat-day {
+      align-self: center;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.06);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .thread-msg {
+      max-width: 88%;
+      border-radius: 16px;
+      padding: 10px 12px 11px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .phone.visible .thread-msg { opacity: 1; transform: translateY(0); }
+    .phone.visible .thread-msg:nth-child(2) { transition-delay: 200ms; }
+    .phone.visible .thread-msg:nth-child(3) { transition-delay: 600ms; }
+    .phone.visible .thread-msg:nth-child(4) { transition-delay: 1000ms; }
+    .phone.visible .thread-msg:nth-child(5) { transition-delay: 1400ms; }
+    .msg-in {
+      align-self: flex-start;
+      background: #241E2A;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-bottom-left-radius: 6px;
+    }
+    .msg-out {
+      align-self: flex-end;
+      background: #1E3B33;
+      border: 1px solid rgba(42,157,143,0.25);
+      border-bottom-right-radius: 6px;
+    }
+    .msg-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--orange-light);
+      margin-bottom: 6px;
+    }
+    .msg-out .msg-name { color: var(--teal-light); }
+    .voice-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .vn-play {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .vn-play:hover { transform: scale(1.08); }
+    .vn-play:active { transform: scale(0.94); }
+    .msg-out .vn-play { background: var(--teal-light); }
+    .vn-play svg { width: 12px; height: 12px; fill: #fff; margin-left: 1px; }
+    .vn-bars {
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 26px;
+    }
+    .vn-bars span {
+      display: block;
+      width: 3px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.45);
+    }
+    .vn-bars span:nth-child(6n+1) { height: 30%; }
+    .vn-bars span:nth-child(6n+2) { height: 65%; }
+    .vn-bars span:nth-child(6n+3) { height: 95%; }
+    .vn-bars span:nth-child(6n+4) { height: 50%; }
+    .vn-bars span:nth-child(6n+5) { height: 80%; }
+    .vn-bars span:nth-child(6n+6) { height: 40%; }
+    .playing .vn-bars span { animation: wave 1.1s ease-in-out infinite; }
+    .playing .vn-bars span:nth-child(2n) { animation-delay: 0.15s; }
+    .playing .vn-bars span:nth-child(3n) { animation-delay: 0.3s; }
+    .playing .vn-bars span:nth-child(5n) { animation-delay: 0.45s; }
+    .vn-time {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      font-variant-numeric: tabular-nums;
+    }
+    .msg-caption {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.5;
+      margin-top: 8px;
+    }
+    .msg-translate {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-style: italic;
+      line-height: 1.5;
+      margin-top: 3px;
+    }
+    .chip-pop {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 9px;
+      padding: 4px 10px;
+      border-radius: 100px;
+      background: rgba(42,157,143,0.18);
+      border: 1px solid rgba(42,157,143,0.35);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal-light);
+    }
+    .chip-pop svg { width: 11px; height: 11px; stroke: var(--teal-light); }
+    .msg-system {
+      align-self: center;
+      max-width: 94%;
+      text-align: center;
+      background: rgba(212,98,26,0.1);
+      border: 1px dashed rgba(212,98,26,0.45);
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.75);
+    }
+    .msg-system strong { color: var(--orange-light); }
 
     /* ══════════════════════════════════════════════
        HOW IT WORKS (Flywheel)
@@ -864,6 +1128,142 @@
     .edge-quote span {
       color: var(--orange);
     }
+    .edge-note {
+      font-size: clamp(15px, 1.6vw, 17px);
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 640px;
+      margin-top: 20px;
+    }
+    .edge-note strong { color: #fff; font-weight: 700; }
+
+    /* ══════════════════════════════════════════════
+       VISION — VOICE LAYER FOR DAILY LIFE
+    ══════════════════════════════════════════════ */
+    .vision {
+      background:
+        linear-gradient(rgba(26,26,26,0.97), rgba(26,26,26,0.97)),
+        repeating-linear-gradient(0deg, transparent, transparent 47px, rgba(255,255,255,0.35) 48px),
+        repeating-linear-gradient(90deg, transparent, transparent 47px, rgba(255,255,255,0.35) 48px),
+        var(--dark);
+      color: #fff;
+    }
+    .vision-thesis {
+      font-size: clamp(19px, 2.6vw, 28px);
+      font-weight: 700;
+      line-height: 1.45;
+      color: #fff;
+      max-width: 760px;
+      margin: 32px 0 12px;
+    }
+    .vision-thesis .hl-orange { color: var(--orange-light); }
+    .vision-thesis .hl-teal { color: var(--teal-light); }
+    .vision-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .vision-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .vision-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,98,26,0.45);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .vision-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(212,98,26,0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .vision-card-icon svg { width: 24px; height: 24px; stroke: var(--orange-light); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .vision-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .vision-card .vc-quote {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--orange-light);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .vision-card p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.65;
+    }
+    .vision-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 44px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .vision-stat .num {
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 900;
+      color: var(--teal-light);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .vision-stat .label {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      max-width: 460px;
+      line-height: 1.55;
+    }
+
+    /* ══════════════════════════════════════════════
+       TRUST LIST (Esethu section, personal layer)
+    ══════════════════════════════════════════════ */
+    .trust-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 18px;
+      border-radius: 100px;
+      background: #fff;
+      border: 1px solid rgba(27,122,110,0.25);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--dark);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .trust-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(27,122,110,0.12);
+      border-color: var(--teal);
+    }
+    .trust-pill svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--teal);
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
 
     /* ══════════════════════════════════════════════
        ESETHU FRAMEWORK
@@ -965,6 +1365,10 @@
     .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
     .newsletter-form input:focus { border-color: var(--orange); }
     .newsletter-form button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       padding: 14px 24px;
       background: var(--orange);
       color: #fff;
@@ -972,14 +1376,53 @@
       font-weight: 600;
       font-size: 15px;
       white-space: nowrap;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.15s ease;
       min-height: 48px;
     }
     .newsletter-form button:hover { background: var(--orange-light); }
+    .newsletter-form button:active { transform: scale(0.97); }
+    .newsletter-form button:disabled { opacity: 0.6; cursor: wait; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px; height: 1px;
+      margin: -1px; padding: 0;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .newsletter-msg {
       margin-top: 12px;
-      font-size: 13px;
-      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+      min-height: 21px;
+    }
+    .newsletter-msg.show { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .newsletter-msg .msg-check {
+      display: inline-flex;
+      vertical-align: -3px;
+      margin-right: 6px;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: var(--teal-light);
+      align-items: center;
+      justify-content: center;
+      animation: scaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    .newsletter-msg .msg-check svg { width: 10px; height: 10px; stroke: #fff; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    @media (prefers-reduced-motion: reduce) {
+      .spinner { animation-duration: 1.4s; }
+      .newsletter-msg.show, .newsletter-msg .msg-check { animation: none; }
     }
 
     /* ══════════════════════════════════════════════
@@ -989,7 +1432,7 @@
       background: var(--dark);
       border-top: 1px solid rgba(255,255,255,0.06);
       padding: 40px 0;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.68);
     }
     .footer-inner {
       width: var(--container);
@@ -1029,7 +1472,7 @@
       padding-top: 24px;
       border-top: 1px solid rgba(255,255,255,0.06);
       font-size: 14px;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.55);
       font-style: italic;
     }
 
@@ -1038,6 +1481,9 @@
     ══════════════════════════════════════════════ */
     @media (max-width: 1024px) {
       .esethu-cards { grid-template-columns: 1fr; }
+      .vision-cards { grid-template-columns: 1fr; }
+      .threads-grid { grid-template-columns: 1fr; gap: 48px; }
+      .threads-grid .phone { order: -1; }
     }
 
     @media (max-width: 768px) {
@@ -1045,8 +1491,6 @@
       .nav-mobile-toggle { display: flex; }
       .problem-stats { grid-template-columns: 1fr; gap: 32px; }
       .solution-cards { grid-template-columns: 1fr; }
-      .teach-flow { flex-direction: column; }
-      .teach-arrow { transform: rotate(90deg); }
       .flywheel-steps { flex-direction: column; align-items: center; }
       .flywheel-arrow { transform: rotate(90deg); }
       .edge-numbers { flex-direction: column; gap: 24px; }
@@ -1056,6 +1500,7 @@
       .footer-inner { flex-direction: column; text-align: center; }
       .traction-grid { grid-template-columns: repeat(2, 1fr); }
       .esethu-cards { grid-template-columns: 1fr; }
+      .scroll-cue { display: none; }
     }
 
     @media (max-width: 375px) {
@@ -1075,7 +1520,8 @@
       <ul class="nav-links">
         <li><a href="#problem" data-i18n="navProblem">Problem</a></li>
         <li><a href="#solution" data-i18n="navSolution">Solution</a></li>
-        <li><a href="#how-it-works" data-i18n="navHow">How It Works</a></li>
+        <li><a href="#threads" data-i18n="navThreads">Family Threads</a></li>
+        <li><a href="#vision" data-i18n="navVision">Vision</a></li>
         <li><a href="#newsletter" data-i18n="navDownload">Waitlist</a></li>
       </ul>
       <div style="display:flex;align-items:center;gap:16px;">
@@ -1096,7 +1542,8 @@
     <button class="mobile-menu-close" aria-label="Close menu" id="mobileClose">&times;</button>
     <a href="#problem" data-i18n="navProblem" class="mobile-nav-link">Problem</a>
     <a href="#solution" data-i18n="navSolution" class="mobile-nav-link">Solution</a>
-    <a href="#how-it-works" data-i18n="navHow" class="mobile-nav-link">How It Works</a>
+    <a href="#threads" data-i18n="navThreads" class="mobile-nav-link">Family Threads</a>
+    <a href="#vision" data-i18n="navVision" class="mobile-nav-link">Vision</a>
     <a href="#newsletter" data-i18n="navDownload" class="mobile-nav-link">Waitlist</a>
   </div>
 
@@ -1108,16 +1555,20 @@
       </video>
     </div>
     <div class="hero-content">
-      <h1 class="hero-headline reveal" data-i18n="heroHeadline">"My son was born in Belgium.<br>He doesn't speak Kinyarwanda."</h1>
-      <p class="hero-mission shimmer-text reveal" style="transition-delay:500ms" data-i18n="heroMission">So I built Ijwi AI &mdash; the voice layer for Africa.</p>
-      <p class="hero-body reveal" style="transition-delay:1000ms" data-i18n="heroBody">Diaspora families learn their heritage language. Native speakers contribute their voice. Together, we're building voice AI for Africa's 2,000+ languages &mdash; fewer than 3% have any public voice data at all.</p>
-      <p class="hero-tagline reveal" style="transition-delay:1500ms" data-i18n="heroTagline">Every lesson trains AI. Every voice builds the future.</p>
-      <div class="hero-buttons reveal" style="transition-delay:2000ms">
+      <div class="hero-eyebrow reveal"><span class="pulse-dot" aria-hidden="true"></span><span data-i18n="heroEyebrow">Voice AI for African languages</span></div>
+      <h1 class="hero-headline reveal" style="transition-delay:120ms" data-i18n="heroHeadline">"My son was born in Belgium.<br>He doesn't speak Kinyarwanda."</h1>
+      <p class="hero-mission shimmer-text reveal" style="transition-delay:240ms" data-i18n="heroMission">So I built Ijwi AI &mdash; the voice layer for Africa.</p>
+      <p class="hero-body reveal" style="transition-delay:360ms" data-i18n="heroBody">Diaspora families learn their heritage language. Native speakers contribute their voice. Every conversation trains voice AI for the 2,000+ languages Big Tech left behind.</p>
+      <div class="hero-buttons reveal" style="transition-delay:480ms">
         <a href="#newsletter" class="btn btn-primary magnetic">
           <span data-i18n="heroWaitlist">Join the Waitlist</span>
         </a>
+        <a href="#threads" class="btn btn-secondary">
+          <span data-i18n="heroSecondary">See a Family Thread</span>
+        </a>
       </div>
     </div>
+    <div class="scroll-cue" aria-hidden="true"></div>
   </section>
 
   <!-- ══════ LANGUAGE MARQUEE ══════ -->
@@ -1138,8 +1589,8 @@
           <div class="stat-label" data-i18n="stat1">African languages spoken daily</div>
         </div>
         <div class="stat-card reveal" style="--i:1">
-          <div class="stat-number" data-count="67" data-prefix="$" data-suffix="B">$67B</div>
-          <div class="stat-label" data-i18n="stat2">Mobile money market by 2030</div>
+          <div class="stat-number" data-count="3" data-prefix="&lt;" data-suffix="%">&lt;3%</div>
+          <div class="stat-label" data-i18n="stat2">Have any public voice data at all</div>
         </div>
         <div class="stat-card reveal" style="--i:2">
           <div class="stat-number" data-count="0" data-static="0">0</div>
@@ -1155,7 +1606,7 @@
     <div class="container">
       <div class="solution-wrap">
         <div class="solution-video">
-          <video autoplay muted loop playsinline preload="metadata">
+          <video muted loop playsinline preload="none">
             <source src="/soundwaves-to-data.mp4" type="video/mp4" />
           </video>
         </div>
@@ -1184,35 +1635,93 @@
     </div>
   </section>
 
-  <!-- ══════ TEACH YOUR CHILD ══════ -->
-  <section class="section teach" id="teach">
-    <div class="teach-bg-img"><img src="/teach-illustration.png" alt="" loading="lazy" width="2730" height="1536" /></div>
-    <div class="container" style="text-align:center">
-      <div class="section-label reveal" style="color:rgba(255,255,255,0.7)" data-i18n="teachLabel">The Bridge</div>
+  <!-- ══════ FAMILY VOICE THREADS ══════ -->
+  <section class="section teach" id="threads">
+    <div class="teach-bg-img"><img src="/teach-illustration.jpg" alt="" loading="lazy" width="1600" height="893" /></div>
+    <div class="container">
+      <div class="section-label reveal" style="color:rgba(255,255,255,0.7)" data-i18n="teachLabel">Family Voice Threads</div>
       <h2 class="teach-headline reveal" data-i18n="teachTitle">Three generations. Two continents. One language.</h2>
-      <div class="teach-flow stagger">
-        <div class="teach-step reveal" style="--i:0">
-          <div class="teach-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="none" stroke="#fff" stroke-width="2"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" fill="none" stroke="#fff" stroke-width="2"/></svg>
+      <p class="teach-sub reveal" data-i18n="teachSub">It works like the voice notes your family already sends on WhatsApp &mdash; except every message becomes a living lesson, and the language lives on.</p>
+      <div class="threads-grid">
+        <!-- Phone mockup -->
+        <div class="phone reveal-scale" id="threadPhone" role="img" aria-label="A family voice thread: Mama Chantal sends a Kinyarwanda voice note from Kigali, Keza repeats the phrase from Brussels and gets pronunciation feedback">
+          <div class="phone-screen">
+            <div class="chat-header">
+              <div class="chat-avatar" aria-hidden="true">U</div>
+              <div>
+                <div class="chat-title" data-i18n="chatTitle">Umuryango &mdash; Family Thread</div>
+                <div class="chat-status" data-i18n="chatStatus">3 voices &middot; Kinyarwanda</div>
+              </div>
+            </div>
+            <div class="chat-body">
+              <div class="chat-day thread-msg" data-i18n="chatDay">Today</div>
+              <div class="thread-msg msg-in">
+                <div class="msg-name" data-i18n="chatName1">Mama Chantal &middot; Kigali</div>
+                <div class="voice-note playing">
+                  <button class="vn-play" type="button" aria-label="Play voice note from Mama Chantal">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  <div class="vn-bars" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="vn-time">0:14</span>
+                </div>
+                <div class="msg-caption">&ldquo;Mwaramutse! Uyu munsi tuvuga amazina y&rsquo;ibiryo&hellip;&rdquo;</div>
+                <div class="msg-translate" data-i18n="chatTrans1">Good morning! Today we say the names of foods&hellip;</div>
+              </div>
+              <div class="thread-msg msg-out">
+                <div class="msg-name" data-i18n="chatName2">Keza &middot; Brussels</div>
+                <div class="voice-note">
+                  <button class="vn-play" type="button" aria-label="Play voice note from Keza">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                  </button>
+                  <div class="vn-bars" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                  </div>
+                  <span class="vn-time">0:09</span>
+                </div>
+                <div class="msg-caption">&ldquo;Mwaramutse, Bibi!&rdquo;</div>
+                <div class="chip-pop">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span data-i18n="chatFeedback">Great pronunciation &middot; +10 XP</span>
+                </div>
+              </div>
+              <div class="thread-msg msg-system" data-i18n="chatSystem"><strong>Ijwi:</strong> this exchange just added 23 seconds of consented, conversational Kinyarwanda &mdash; data that exists nowhere else on Earth.</div>
+            </div>
           </div>
-          <div class="teach-step-title" data-i18n="teachStep1Title">Grandma records in Kigali</div>
-          <div class="teach-step-sub" data-i18n="teachStep1Sub">Her voice becomes training data</div>
         </div>
-        <div class="teach-arrow reveal" style="--i:1">&#8594;</div>
-        <div class="teach-step reveal" style="--i:2">
-          <div class="teach-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="none" stroke="#fff" stroke-width="2"/></svg>
+        <!-- Steps -->
+        <div class="teach-flow stagger">
+          <div class="teach-step reveal" style="--i:0">
+            <div class="teach-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" fill="none" stroke="#fff" stroke-width="2"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" fill="none" stroke="#fff" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <div class="teach-step-title" data-i18n="teachStep1Title">Grandma records in Kigali</div>
+              <div class="teach-step-sub" data-i18n="teachStep1Sub">A voice note, a proverb, a bedtime story &mdash; sent the way she already speaks to family.</div>
+            </div>
           </div>
-          <div class="teach-step-title" data-i18n="teachStep2Title">Featured Voice</div>
-          <div class="teach-step-sub" data-i18n="teachStep2Sub">Her pronunciation guides learners</div>
-        </div>
-        <div class="teach-arrow reveal" style="--i:3">&#8594;</div>
-        <div class="teach-step reveal" style="--i:4">
-          <div class="teach-icon">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="7" r="4" fill="none" stroke="#fff" stroke-width="2"/></svg>
+          <div class="teach-step reveal" style="--i:1">
+            <div class="teach-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="none" stroke="#fff" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <div class="teach-step-title" data-i18n="teachStep2Title">Her voice becomes the lesson</div>
+              <div class="teach-step-sub" data-i18n="teachStep2Sub">Ijwi turns her words into prompts, pronunciation guides, and family challenges.</div>
+            </div>
           </div>
-          <div class="teach-step-title" data-i18n="teachStep3Title">Child learns in Brussels</div>
-          <div class="teach-step-sub" data-i18n="teachStep3Sub">Heritage language preserved</div>
+          <div class="teach-step reveal" style="--i:2">
+            <div class="teach-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" fill="none" stroke="#fff" stroke-width="2"/><circle cx="12" cy="7" r="4" fill="none" stroke="#fff" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <div class="teach-step-title" data-i18n="teachStep3Title">Her grandchild answers from Brussels</div>
+              <div class="teach-step-sub" data-i18n="teachStep3Sub">The child learns the language. The family keeps the thread. The AI learns real conversation.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1221,7 +1730,7 @@
   <!-- ══════ HOW IT WORKS ══════ -->
   <section class="section section-dark flywheel" id="how-it-works">
     <div class="flywheel-video">
-      <video autoplay muted loop playsinline preload="metadata">
+      <video muted loop playsinline preload="none">
         <source src="/flywheel-rotation.mp4" type="video/mp4" />
       </video>
     </div>
@@ -1277,31 +1786,87 @@
     </div>
   </section>
 
-  <!-- ══════ COMPETITIVE EDGE ══════ -->
+  <!-- ══════ THE DATA MOAT ══════ -->
   <section class="section section-dark" id="edge">
     <div class="container">
-      <div class="section-label reveal" data-i18n="edgeLabel">Competitive Edge</div>
+      <div class="section-label reveal" data-i18n="edgeLabel">The Data Moat</div>
+      <h2 class="section-title reveal" style="color:#fff" data-i18n="edgeTitle">Everyone has read speech.<br>No one has conversation.</h2>
       <div class="edge-numbers">
         <div class="edge-stat reveal" style="transition-delay:0ms">
           <div class="num" data-count="2384">2,384+</div>
-          <div class="label" data-i18n="edge1">Hours of read speech exist</div>
+          <div class="label" data-i18n="edge1">Hours of read Kinyarwanda speech exist &mdash; public, scraped, already powering Big Tech transcription</div>
         </div>
         <div class="edge-stat reveal" style="transition-delay:100ms">
           <div class="num" data-count="0" data-static="Zero">Zero</div>
-          <div class="label" data-i18n="edge2">Hours of conversational Kinyarwanda or Kiswahili</div>
+          <div class="label" data-i18n="edge2">Hours of conversational Kinyarwanda or Kiswahili in any public corpus on Earth</div>
         </div>
       </div>
       <p class="edge-quote reveal" data-i18n="edgeQuote"><span>That's what we collect.</span></p>
+      <p class="edge-note reveal" style="transition-delay:100ms" data-i18n="edgeNote">Every family thread adds real, emotional, back-and-forth conversation &mdash; the data voice agents actually need. It is <strong>consented, it compounds daily, and it cannot be scraped.</strong></p>
     </div>
   </section>
 
-  <!-- ══════ ESETHU FRAMEWORK ══════ -->
-  <section class="section section-cream esethu-section" id="esethu">
-    <img class="esethu-bg" src="/esethu-illustration.png" alt="" loading="lazy" width="2730" height="1536" />
+  <!-- ══════ VISION — THE VOICE LAYER FOR DAILY LIFE ══════ -->
+  <section class="section vision" id="vision">
     <div class="container">
-      <div class="section-label reveal" style="color:var(--teal)" data-i18n="esethuLabel">Esethu Framework</div>
-      <h2 class="section-title reveal" data-i18n="esethuTitle">African communities own their data.</h2>
-      <p class="section-desc reveal" data-i18n="esethuDesc">Built on the Esethu Framework &mdash; peer-reviewed African data governance (ACL 2025).</p>
+      <div class="section-label reveal" data-i18n="visionLabel">The Vision</div>
+      <h2 class="section-title reveal" style="color:#fff" data-i18n="visionTitle">The voice layer for African daily life.</h2>
+      <p class="vision-thesis reveal" data-i18n="visionThesis">Africa's informal economy runs on <span class="hl-orange">voice, trust, and relationships</span>. The AI economy runs on <span class="hl-teal">structured data</span>. Ijwi is the bridge between them.</p>
+      <p class="section-desc reveal" data-i18n="visionDesc">Daily commerce here doesn't happen in dashboards. It happens in voice notes, WhatsApp chats, and mobile money transfers &mdash; in Kinyarwanda, Kiswahili, and 2,000 other languages. The same voice technology that keeps families connected can give that economy a memory.</p>
+      <div class="vision-cards stagger">
+        <div class="vision-card reveal" style="--i:0">
+          <div class="vision-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+          </div>
+          <h3 data-i18n="vision1Title">Speak your business</h3>
+          <p class="vc-quote" data-i18n="vision1Quote">&ldquo;I sold 12 crates. Jean paid half. 3 bags left.&rdquo;</p>
+          <p data-i18n="vision1Desc">A market seller talks; Ijwi keeps the books. Sales, debts, and stock &mdash; recorded in her own language, no forms, no accounting words.</p>
+        </div>
+        <div class="vision-card reveal" style="--i:1">
+          <div class="vision-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <h3 data-i18n="vision2Title">Where people already are</h3>
+          <p class="vc-quote" data-i18n="vision2Quote">Voice notes. WhatsApp. Mobile money.</p>
+          <p data-i18n="vision2Desc">No new habits to learn. Ijwi meets commerce in the channels it already lives in &mdash; and answers back in the language people actually speak.</p>
+        </div>
+        <div class="vision-card reveal" style="--i:2">
+          <div class="vision-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3 data-i18n="vision3Title">Records that open doors</h3>
+          <p class="vc-quote" data-i18n="vision3Quote">From voice notes to credit-ready.</p>
+          <p data-i18n="vision3Desc">With explicit consent &mdash; and only then &mdash; those records can become a business profile a cooperative or lender can trust. The user decides. Always.</p>
+        </div>
+      </div>
+      <div class="vision-stat reveal">
+        <div class="num" data-count="67" data-prefix="$" data-suffix="B">$67B</div>
+        <div class="label" data-i18n="visionStat">Africa's mobile money market by 2030 &mdash; and almost none of it can be operated by voice in the languages its users speak. Family threads today. Economic infrastructure tomorrow.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════ TRUST & OWNERSHIP ══════ -->
+  <section class="section section-cream esethu-section" id="esethu">
+    <img class="esethu-bg" src="/esethu-illustration.jpg" alt="" loading="lazy" width="1600" height="893" />
+    <div class="container">
+      <div class="section-label reveal" style="color:var(--teal)" data-i18n="esethuLabel">Trust &amp; Ownership</div>
+      <h2 class="section-title reveal" data-i18n="esethuTitle">Your voice stays yours.</h2>
+      <p class="section-desc reveal" data-i18n="esethuDesc">Not owned by an institution. Not scraped from the internet. Owned by you, your family, and your community &mdash; governed by the Esethu Framework, peer-reviewed African data governance (ACL 2025).</p>
+      <div class="trust-list reveal" style="transition-delay:100ms">
+        <span class="trust-pill">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          <span data-i18n="trust1">Explicit consent before anything is shared</span>
+        </span>
+        <span class="trust-pill">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <span data-i18n="trust2">Delete your voice anytime &mdash; it's gone</span>
+        </span>
+        <span class="trust-pill">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span data-i18n="trust3">Family threads are private by default</span>
+        </span>
+      </div>
       <div class="esethu-cards stagger">
         <div class="esethu-card tilt reveal" style="--i:0">
           <div class="esethu-card-icon">
@@ -1344,10 +1909,11 @@
       </div>
       <p class="reveal" style="color:rgba(255,255,255,0.6);margin-bottom:20px;font-size:15px;" data-i18n="ctaNewsletter">Stay in the loop. Get updates on launch day.</p>
       <form class="newsletter-form reveal" style="transition-delay:100ms" id="newsletterForm" name="newsletter">
-        <input type="email" placeholder="you@example.com" required aria-label="Email address" />
-        <button type="submit" data-i18n="ctaSubscribe">Subscribe</button>
+        <label for="newsletterEmail" class="visually-hidden" data-i18n="ctaEmailLabel">Email address</label>
+        <input type="email" id="newsletterEmail" placeholder="you@example.com" required autocomplete="email" inputmode="email" />
+        <button type="submit"><span data-i18n="ctaSubscribe">Subscribe</span></button>
       </form>
-      <p class="newsletter-msg" id="newsletterMsg"></p>
+      <p class="newsletter-msg" id="newsletterMsg" role="status" aria-live="polite"></p>
     </div>
   </section>
 
@@ -1383,17 +1949,19 @@
         navLogo: "Ijwi AI",
         navProblem: "Problem",
         navSolution: "Solution",
-        navHow: "How It Works",
+        navThreads: "Family Threads",
+        navVision: "Vision",
         navDownload: "Waitlist",
+        heroEyebrow: "Voice AI for African languages",
         heroHeadline: '"My son was born in Belgium.<br>He doesn\'t speak Kinyarwanda."',
         heroMission: 'So I built Ijwi AI &mdash; the voice layer for Africa.',
-        heroBody: 'Diaspora families learn their heritage language. Native speakers contribute their voice. Together, we\'re building voice AI for Africa\'s 2,000+ languages — fewer than 3% have any public voice data at all.',
-        heroTagline: 'Every lesson trains AI. Every voice builds the future.',
+        heroBody: 'Diaspora families learn their heritage language. Native speakers contribute their voice. Every conversation trains voice AI for the 2,000+ languages Big Tech left behind.',
         heroWaitlist: "Join the Waitlist",
+        heroSecondary: "See a Family Thread",
         problemLabel: "The Problem",
         problemTitle: "Africa's languages are invisible to AI.",
         stat1: "African languages spoken daily",
-        stat2: "Mobile money market by 2030",
+        stat2: "Have any public voice data at all",
         stat3: "Big Tech voices that can speak Kinyarwanda",
         problemQuote: "Google can transcribe Kinyarwanda. It still can't speak it.",
         solutionLabel: "The Solution",
@@ -1403,14 +1971,23 @@
         contributeTitle: "Contribute",
         contributeDesc: "Native speakers record their voices to train AI models. Every recording makes the technology smarter.",
         solutionTagline: 'Every lesson = <span>training data</span>',
-        teachLabel: "The Bridge",
+        teachLabel: "Family Voice Threads",
         teachTitle: "Three generations. Two continents. One language.",
+        teachSub: "It works like the voice notes your family already sends on WhatsApp &mdash; except every message becomes a living lesson, and the language lives on.",
+        chatTitle: "Umuryango &mdash; Family Thread",
+        chatStatus: "3 voices &middot; Kinyarwanda",
+        chatDay: "Today",
+        chatName1: "Mama Chantal &middot; Kigali",
+        chatTrans1: "Good morning! Today we say the names of foods&hellip;",
+        chatName2: "Keza &middot; Brussels",
+        chatFeedback: "Great pronunciation &middot; +10 XP",
+        chatSystem: "<strong>Ijwi:</strong> this exchange just added 23 seconds of consented, conversational Kinyarwanda &mdash; data that exists nowhere else on Earth.",
         teachStep1Title: "Grandma records in Kigali",
-        teachStep1Sub: "Her voice becomes training data",
-        teachStep2Title: "Featured Voice",
-        teachStep2Sub: "Her pronunciation guides learners",
-        teachStep3Title: "Child learns in Brussels",
-        teachStep3Sub: "Heritage language preserved",
+        teachStep1Sub: "A voice note, a proverb, a bedtime story &mdash; sent the way she already speaks to family.",
+        teachStep2Title: "Her voice becomes the lesson",
+        teachStep2Sub: "Ijwi turns her words into prompts, pronunciation guides, and family challenges.",
+        teachStep3Title: "Her grandchild answers from Brussels",
+        teachStep3Sub: "The child learns the language. The family keeps the thread. The AI learns real conversation.",
         flywheelLabel: "How It Works",
         flywheelTitle: "The Ijwi Flywheel",
         fw1: "Record", fw2: "Train", fw3: "API", fw4: "Revenue", fw5: "More Data",
@@ -1418,13 +1995,32 @@
         tractionLabel: "Traction",
         tractionTitle: "Building in public.",
         trac1: "Prompts", trac2: "Languages", trac3: "Categories", trac4: "Mode supported", trac5: "Tests passing", trac6: "Badges to earn",
-        edgeLabel: "Competitive Edge",
-        edge1: "Hours of read speech exist",
-        edge2: "Hours of conversational Kinyarwanda or Kiswahili",
+        edgeLabel: "The Data Moat",
+        edgeTitle: "Everyone has read speech.<br>No one has conversation.",
+        edge1: "Hours of read Kinyarwanda speech exist &mdash; public, scraped, already powering Big Tech transcription",
+        edge2: "Hours of conversational Kinyarwanda or Kiswahili in any public corpus on Earth",
         edgeQuote: "<span>That's what we collect.</span>",
-        esethuLabel: "Esethu Framework",
-        esethuTitle: "African communities own their data.",
-        esethuDesc: "Built on the Esethu Framework — peer-reviewed African data governance (ACL 2025).",
+        edgeNote: "Every family thread adds real, emotional, back-and-forth conversation &mdash; the data voice agents actually need. It is <strong>consented, it compounds daily, and it cannot be scraped.</strong>",
+        visionLabel: "The Vision",
+        visionTitle: "The voice layer for African daily life.",
+        visionThesis: 'Africa\'s informal economy runs on <span class="hl-orange">voice, trust, and relationships</span>. The AI economy runs on <span class="hl-teal">structured data</span>. Ijwi is the bridge between them.',
+        visionDesc: "Daily commerce here doesn't happen in dashboards. It happens in voice notes, WhatsApp chats, and mobile money transfers &mdash; in Kinyarwanda, Kiswahili, and 2,000 other languages. The same voice technology that keeps families connected can give that economy a memory.",
+        vision1Title: "Speak your business",
+        vision1Quote: "&ldquo;I sold 12 crates. Jean paid half. 3 bags left.&rdquo;",
+        vision1Desc: "A market seller talks; Ijwi keeps the books. Sales, debts, and stock &mdash; recorded in her own language, no forms, no accounting words.",
+        vision2Title: "Where people already are",
+        vision2Quote: "Voice notes. WhatsApp. Mobile money.",
+        vision2Desc: "No new habits to learn. Ijwi meets commerce in the channels it already lives in &mdash; and answers back in the language people actually speak.",
+        vision3Title: "Records that open doors",
+        vision3Quote: "From voice notes to credit-ready.",
+        vision3Desc: "With explicit consent &mdash; and only then &mdash; those records can become a business profile a cooperative or lender can trust. The user decides. Always.",
+        visionStat: "Africa's mobile money market by 2030 &mdash; and almost none of it can be operated by voice in the languages its users speak. Family threads today. Economic infrastructure tomorrow.",
+        esethuLabel: "Trust &amp; Ownership",
+        esethuTitle: "Your voice stays yours.",
+        esethuDesc: "Not owned by an institution. Not scraped from the internet. Owned by you, your family, and your community &mdash; governed by the Esethu Framework, peer-reviewed African data governance (ACL 2025).",
+        trust1: "Explicit consent before anything is shared",
+        trust2: "Delete your voice anytime &mdash; it's gone",
+        trust3: "Family threads are private by default",
         esethu1Title: "Free for African Researchers",
         esethu1Desc: "Open access to language data for African universities and non-profits advancing local AI research.",
         esethu2Title: "Commercial Licensing for Others",
@@ -1435,122 +2031,185 @@
         ctaWaitlist: "Join the Waitlist",
         ctaNewsletter: "Stay in the loop. Get updates on launch day.",
         ctaSubscribe: "Subscribe",
+        ctaEmailLabel: "Email address",
         footerTagline: "Ijwi means voice in Kinyarwanda."
       },
       fr: {
         navLogo: "Ijwi AI",
-        navProblem: "Probl\u00e8me",
+        navProblem: "Problème",
         navSolution: "Solution",
-        navHow: "Comment \u00e7a marche",
+        navThreads: "Fils familiaux",
+        navVision: "Vision",
         navDownload: "Liste d'attente",
-        heroHeadline: '"Mon fils est n\u00e9 en Belgique.<br>Il ne parle pas Kinyarwanda."',
-        heroMission: 'J\'ai donc cr\u00e9\u00e9 Ijwi AI &mdash; la couche vocale pour l\'Afrique.',
-        heroBody: 'Les familles de la diaspora apprennent leur langue maternelle. Les locuteurs natifs contribuent leur voix. Ensemble, nous construisons l\'IA vocale pour les plus de 2 000 langues d\'Afrique — moins de 3 % disposent de données vocales publiques.',
-        heroTagline: 'Chaque le\u00e7on entra\u00eene l\'IA. Chaque voix construit l\'avenir.',
+        heroEyebrow: "L'IA vocale pour les langues africaines",
+        heroHeadline: '"Mon fils est né en Belgique.<br>Il ne parle pas Kinyarwanda."',
+        heroMission: 'J\'ai donc créé Ijwi AI &mdash; la couche vocale pour l\'Afrique.',
+        heroBody: 'Les familles de la diaspora apprennent leur langue d\'héritage. Les locuteurs natifs contribuent leur voix. Chaque conversation entraîne une IA vocale pour les plus de 2 000 langues que les géants de la tech ont laissées de côté.',
         heroWaitlist: "Rejoindre la liste d'attente",
-        problemLabel: "Le Probl\u00e8me",
+        heroSecondary: "Voir un fil familial",
+        problemLabel: "Le Problème",
         problemTitle: "Les langues africaines sont invisibles pour l'IA.",
-        stat1: "Langues africaines parl\u00e9es quotidiennement",
-        stat2: "March\u00e9 du mobile money d'ici 2030",
+        stat1: "Langues africaines parlées quotidiennement",
+        stat2: "Disposent de la moindre donnée vocale publique",
         stat3: "Voix Big Tech capables de parler le kinyarwanda",
         problemQuote: "Google peut transcrire le kinyarwanda. Il ne peut toujours pas le parler.",
         solutionLabel: "La Solution",
-        solutionTitle: "Deux c\u00f4t\u00e9s. Une mission.",
+        solutionTitle: "Deux côtés. Une mission.",
         learnTitle: "Apprendre",
-        learnDesc: "Les familles de la diaspora apprennent leur langue d'h\u00e9ritage gr\u00e2ce \u00e0 des le\u00e7ons vocales.",
+        learnDesc: "Les familles de la diaspora apprennent leur langue d'héritage grâce à des leçons vocales.",
         contributeTitle: "Contribuer",
-        contributeDesc: "Les locuteurs natifs enregistrent leur voix pour entra\u00eener les mod\u00e8les d'IA.",
-        solutionTagline: 'Chaque le\u00e7on = <span>donn\u00e9es d\'entra\u00eenement</span>',
-        teachLabel: "Le Pont",
-        teachTitle: "Trois g\u00e9n\u00e9rations. Deux continents. Une langue.",
-        teachStep1Title: "Grand-m\u00e8re enregistre \u00e0 Kigali",
-        teachStep1Sub: "Sa voix devient des donn\u00e9es",
-        teachStep2Title: "Voix Vedette",
-        teachStep2Sub: "Sa prononciation guide les apprenants",
-        teachStep3Title: "L'enfant apprend \u00e0 Bruxelles",
-        teachStep3Sub: "La langue h\u00e9ritag\u00e9e pr\u00e9serv\u00e9e",
-        flywheelLabel: "Comment \u00e7a marche",
+        contributeDesc: "Les locuteurs natifs enregistrent leur voix pour entraîner les modèles d'IA.",
+        solutionTagline: 'Chaque leçon = <span>données d\'entraînement</span>',
+        teachLabel: "Fils vocaux familiaux",
+        teachTitle: "Trois générations. Deux continents. Une langue.",
+        teachSub: "Comme les notes vocales que votre famille s'envoie déjà sur WhatsApp — sauf que chaque message devient une leçon vivante, et la langue continue de vivre.",
+        chatTitle: "Umuryango &mdash; Fil familial",
+        chatStatus: "3 voix &middot; Kinyarwanda",
+        chatDay: "Aujourd'hui",
+        chatName1: "Mama Chantal &middot; Kigali",
+        chatTrans1: "Bonjour ! Aujourd'hui, nous disons les noms des aliments…",
+        chatName2: "Keza &middot; Bruxelles",
+        chatFeedback: "Excellente prononciation &middot; +10 XP",
+        chatSystem: "<strong>Ijwi :</strong> cet échange vient d'ajouter 23 secondes de kinyarwanda conversationnel consenti — des données qui n'existent nulle part ailleurs sur Terre.",
+        teachStep1Title: "Grand-mère enregistre à Kigali",
+        teachStep1Sub: "Une note vocale, un proverbe, une histoire du soir — envoyés comme elle parle déjà à sa famille.",
+        teachStep2Title: "Sa voix devient la leçon",
+        teachStep2Sub: "Ijwi transforme ses mots en exercices, guides de prononciation et défis familiaux.",
+        teachStep3Title: "Son petit-enfant répond depuis Bruxelles",
+        teachStep3Sub: "L'enfant apprend la langue. La famille garde le fil. L'IA apprend la vraie conversation.",
+        flywheelLabel: "Comment ça marche",
         flywheelTitle: "Le Volant d'Inertie Ijwi",
-        fw1: "Enregistrer", fw2: "Entra\u00eener", fw3: "API", fw4: "Revenus", fw5: "Plus de Donn\u00e9es",
+        fw1: "Enregistrer", fw2: "Entraîner", fw3: "API", fw4: "Revenus", fw5: "Plus de Données",
         flywheelTagline: "Chaque rotation rend l'IA plus intelligente.",
         tractionLabel: "Traction",
         tractionTitle: "Construire en public.",
-        trac1: "Invites", trac2: "Langues", trac3: "Cat\u00e9gories", trac4: "Mode support\u00e9", trac5: "Tests r\u00e9ussis", trac6: "Badges \u00e0 gagner",
-        edgeLabel: "Avantage Comp\u00e9titif",
-        edge1: "Heures de parole lue existent",
-        edge2: "Heures de kinyarwanda ou kiswahili conversationnel",
+        trac1: "Invites", trac2: "Langues", trac3: "Catégories", trac4: "Mode supporté", trac5: "Tests réussis", trac6: "Badges à gagner",
+        edgeLabel: "Le Rempart de Données",
+        edgeTitle: "Tout le monde a de la parole lue.<br>Personne n'a de conversation.",
+        edge1: "Heures de kinyarwanda lu existent — publiques, aspirées, et déjà au service de la transcription des géants de la tech",
+        edge2: "Heures de kinyarwanda ou de kiswahili conversationnel dans le moindre corpus public au monde",
         edgeQuote: "<span>C'est ce que nous collectons.</span>",
-        esethuLabel: "Cadre Esethu",
-        esethuTitle: "Les communaut\u00e9s africaines poss\u00e8dent leurs donn\u00e9es.",
-        esethuDesc: "Fond\u00e9 sur le cadre Esethu \u2014 gouvernance des donn\u00e9es africaine \u00e9valu\u00e9e par les pairs (ACL 2025).",
+        edgeNote: "Chaque fil familial ajoute de la vraie conversation — émotive, spontanée — les données dont les agents vocaux ont réellement besoin. Elles sont <strong>consenties, s'accumulent chaque jour et ne peuvent pas être aspirées.</strong>",
+        visionLabel: "La Vision",
+        visionTitle: "La couche vocale du quotidien africain.",
+        visionThesis: 'L\'économie informelle africaine fonctionne à la <span class="hl-orange">voix, à la confiance et aux relations</span>. L\'économie de l\'IA fonctionne aux <span class="hl-teal">données structurées</span>. Ijwi est le pont entre les deux.',
+        visionDesc: "Le commerce quotidien ne se passe pas dans des tableaux de bord. Il se passe en notes vocales, sur WhatsApp et par mobile money — en kinyarwanda, en kiswahili et dans 2 000 autres langues. La même technologie vocale qui relie les familles peut donner une mémoire à cette économie.",
+        vision1Title: "Gérez votre commerce à la voix",
+        vision1Quote: "« J'ai vendu 12 caisses. Jean a payé la moitié. Il reste 3 sacs. »",
+        vision1Desc: "Une vendeuse de marché parle ; Ijwi tient les comptes. Ventes, dettes et stock — enregistrés dans sa propre langue, sans formulaires, sans jargon comptable.",
+        vision2Title: "Là où les gens sont déjà",
+        vision2Quote: "Notes vocales. WhatsApp. Mobile money.",
+        vision2Desc: "Aucune nouvelle habitude à apprendre. Ijwi rejoint le commerce dans les canaux où il vit déjà — et répond dans la langue que les gens parlent vraiment.",
+        vision3Title: "Des données qui ouvrent des portes",
+        vision3Quote: "Des notes vocales au dossier de crédit.",
+        vision3Desc: "Avec un consentement explicite — et seulement alors — ces données peuvent devenir un profil d'entreprise digne de confiance pour une coopérative ou un prêteur. L'utilisateur décide. Toujours.",
+        visionStat: "Le marché du mobile money africain d'ici 2030 — et presque rien ne peut s'utiliser à la voix dans les langues de ses utilisateurs. Les fils familiaux aujourd'hui. L'infrastructure économique demain.",
+        esethuLabel: "Confiance &amp; Propriété",
+        esethuTitle: "Votre voix reste la vôtre.",
+        esethuDesc: "Ni la propriété d'une institution, ni aspirée sur Internet. Elle appartient à vous, à votre famille et à votre communauté — selon le cadre Esethu, une gouvernance des données africaine évaluée par les pairs (ACL 2025).",
+        trust1: "Consentement explicite avant tout partage",
+        trust2: "Supprimez votre voix à tout moment — définitivement",
+        trust3: "Les fils familiaux sont privés par défaut",
         esethu1Title: "Gratuit pour les chercheurs africains",
-        esethu1Desc: "Acc\u00e8s libre aux donn\u00e9es linguistiques pour les universit\u00e9s et ONG africaines.",
+        esethu1Desc: "Accès libre aux données linguistiques pour les universités et ONG africaines.",
         esethu2Title: "Licences commerciales pour les autres",
-        esethu2Desc: "Licences \u00e9quitables pour les entit\u00e9s commerciales. Les revenus financent les communaut\u00e9s.",
-        esethu3Title: "Revenus R\u00e9investis",
-        esethu3Desc: "Les profits reviennent aux communaut\u00e9s qui ont contribu\u00e9 leurs voix.",
-        ctaTitle: "Chaque langue m\u00e9rite une voix.",
+        esethu2Desc: "Licences équitables pour les entités commerciales. Les revenus financent les communautés.",
+        esethu3Title: "Revenus Réinvestis",
+        esethu3Desc: "Les profits reviennent aux communautés qui ont contribué leurs voix.",
+        ctaTitle: "Chaque langue mérite une voix.",
         ctaWaitlist: "Rejoindre la liste d'attente",
-        ctaNewsletter: "Restez inform\u00e9. Recevez les nouvelles du lancement.",
+        ctaNewsletter: "Restez informé. Recevez les nouvelles du lancement.",
         ctaSubscribe: "S'abonner",
+        ctaEmailLabel: "Adresse e-mail",
         footerTagline: "Ijwi signifie voix en kinyarwanda."
       },
       nl: {
         navLogo: "Ijwi AI",
         navProblem: "Probleem",
         navSolution: "Oplossing",
-        navHow: "Hoe Het Werkt",
+        navThreads: "Familiegesprekken",
+        navVision: "Visie",
         navDownload: "Wachtlijst",
-        heroHeadline: '"Mijn zoon is geboren in Belgi\u00eb.<br>Hij spreekt geen Kinyarwanda."',
+        heroEyebrow: "Spraak-AI voor Afrikaanse talen",
+        heroHeadline: '"Mijn zoon is geboren in België.<br>Hij spreekt geen Kinyarwanda."',
         heroMission: 'Dus bouwde ik Ijwi AI &mdash; de spraaklaag voor Afrika.',
-        heroBody: 'Diasporafamilies leren hun moedertaal. Moedertaalsprekers dragen hun stem bij. Samen bouwen we spraak-AI voor de 2.000+ talen van Afrika — minder dan 3% heeft enige publieke spraakdata.',
-        heroTagline: 'Elke les traint AI. Elke stem bouwt de toekomst.',
+        heroBody: 'Diasporafamilies leren hun erfgoedtaal. Moedertaalsprekers dragen hun stem bij. Elk gesprek traint spraak-AI voor de 2.000+ talen die Big Tech links liet liggen.',
         heroWaitlist: "Schrijf je in op de wachtlijst",
+        heroSecondary: "Bekijk een familiegesprek",
         problemLabel: "Het Probleem",
         problemTitle: "Afrikaanse talen zijn onzichtbaar voor AI.",
         stat1: "Afrikaanse talen dagelijks gesproken",
-        stat2: "Mobiel geldmarkt tegen 2030",
+        stat2: "Heeft ook maar enige publieke spraakdata",
         stat3: "Big Tech-stemmen die Kinyarwanda kunnen spreken",
         problemQuote: "Google kan Kinyarwanda transcriberen. Spreken kan het nog steeds niet.",
         solutionLabel: "De Oplossing",
-        solutionTitle: "Twee kanten. E\u00e9n missie.",
+        solutionTitle: "Twee kanten. Eén missie.",
         learnTitle: "Leren",
         learnDesc: "Diaspora-families leren hun erfgoedtaal via spraaklessen aangedreven door native opnames.",
         contributeTitle: "Bijdragen",
         contributeDesc: "Moedertaalsprekers nemen hun stem op om AI-modellen te trainen.",
         solutionTagline: 'Elke les = <span>trainingsdata</span>',
-        teachLabel: "De Brug",
-        teachTitle: "Drie generaties. Twee continenten. E\u00e9n taal.",
+        teachLabel: "Familie-spraakgesprekken",
+        teachTitle: "Drie generaties. Twee continenten. Eén taal.",
+        teachSub: "Het werkt zoals de spraakberichten die je familie al via WhatsApp stuurt — alleen wordt elk bericht een levende les, en blijft de taal leven.",
+        chatTitle: "Umuryango &mdash; Familiegesprek",
+        chatStatus: "3 stemmen &middot; Kinyarwanda",
+        chatDay: "Vandaag",
+        chatName1: "Mama Chantal &middot; Kigali",
+        chatTrans1: "Goedemorgen! Vandaag leren we de namen van eten…",
+        chatName2: "Keza &middot; Brussel",
+        chatFeedback: "Uitstekende uitspraak &middot; +10 XP",
+        chatSystem: "<strong>Ijwi:</strong> deze uitwisseling voegde net 23 seconden conversationeel Kinyarwanda toe, gedeeld met toestemming — data die nergens anders op aarde bestaat.",
         teachStep1Title: "Oma neemt op in Kigali",
-        teachStep1Sub: "Haar stem wordt trainingsdata",
-        teachStep2Title: "Uitgelichte Stem",
-        teachStep2Sub: "Haar uitspraak begeleidt leerlingen",
-        teachStep3Title: "Kind leert in Brussel",
-        teachStep3Sub: "Erfgoedtaal bewaard",
+        teachStep1Sub: "Een spraakbericht, een spreekwoord, een verhaaltje voor het slapengaan — gestuurd zoals ze al met familie praat.",
+        teachStep2Title: "Haar stem wordt de les",
+        teachStep2Sub: "Ijwi zet haar woorden om in oefeningen, uitspraakgidsen en familie-uitdagingen.",
+        teachStep3Title: "Haar kleinkind antwoordt vanuit Brussel",
+        teachStep3Sub: "Het kind leert de taal. De familie houdt het gesprek levend. De AI leert echte conversatie.",
         flywheelLabel: "Hoe Het Werkt",
         flywheelTitle: "Het Ijwi Vliegwiel",
         fw1: "Opnemen", fw2: "Trainen", fw3: "API", fw4: "Inkomsten", fw5: "Meer Data",
         flywheelTagline: "Elke rotatie maakt de AI slimmer.",
         tractionLabel: "Tractie",
         tractionTitle: "Bouwen in het openbaar.",
-        trac1: "Prompts", trac2: "Talen", trac3: "Categorie\u00ebn", trac4: "Modus ondersteund", trac5: "Tests geslaagd", trac6: "Badges te verdienen",
-        edgeLabel: "Concurrentievoordeel",
-        edge1: "Uren voorgelezen spraak bestaan",
-        edge2: "Uren conversationeel Kinyarwanda of Kiswahili",
+        trac1: "Prompts", trac2: "Talen", trac3: "Categorieën", trac4: "Modus ondersteund", trac5: "Tests geslaagd", trac6: "Badges te verdienen",
+        edgeLabel: "De Datavoorsprong",
+        edgeTitle: "Iedereen heeft voorgelezen spraak.<br>Niemand heeft conversatie.",
+        edge1: "Uren voorgelezen Kinyarwanda bestaan — publiek, gescraped, en drijven nu al de transcriptie van Big Tech aan",
+        edge2: "Uren conversationeel Kinyarwanda of Kiswahili in welk publiek corpus ter wereld dan ook",
         edgeQuote: "<span>Dat is wat wij verzamelen.</span>",
-        esethuLabel: "Esethu Raamwerk",
-        esethuTitle: "Afrikaanse gemeenschappen bezitten hun data.",
-        esethuDesc: "Gebouwd op het Esethu Framework — peer-reviewed Afrikaans databeheer (ACL 2025).",
+        edgeNote: "Elk familiegesprek voegt echte, emotionele conversatie toe — de data die spraakagenten werkelijk nodig hebben. Ze is <strong>met toestemming gedeeld, groeit elke dag en kan niet gescraped worden.</strong>",
+        visionLabel: "De Visie",
+        visionTitle: "De spraaklaag voor het Afrikaanse dagelijks leven.",
+        visionThesis: 'De informele economie van Afrika draait op <span class="hl-orange">stem, vertrouwen en relaties</span>. De AI-economie draait op <span class="hl-teal">gestructureerde data</span>. Ijwi is de brug tussen beide.',
+        visionDesc: "De dagelijkse handel gebeurt niet in dashboards. Ze gebeurt in spraakberichten, op WhatsApp en via mobiel geld — in het Kinyarwanda, Kiswahili en 2.000 andere talen. Dezelfde spraaktechnologie die families verbindt, kan die economie een geheugen geven.",
+        vision1Title: "Spreek je zaak in",
+        vision1Quote: "“Ik verkocht 12 kratten. Jean betaalde de helft. Nog 3 zakken over.”",
+        vision1Desc: "Een marktverkoopster praat; Ijwi houdt de boeken bij. Verkoop, schulden en voorraad — vastgelegd in haar eigen taal, zonder formulieren of boekhoudtaal.",
+        vision2Title: "Waar mensen al zijn",
+        vision2Quote: "Spraakberichten. WhatsApp. Mobiel geld.",
+        vision2Desc: "Geen nieuwe gewoontes nodig. Ijwi sluit aan bij de handel in de kanalen waar die al leeft — en antwoordt in de taal die mensen echt spreken.",
+        vision3Title: "Gegevens die deuren openen",
+        vision3Quote: "Van spraakberichten naar kredietwaardig.",
+        vision3Desc: "Met uitdrukkelijke toestemming — en alleen dan — kunnen die gegevens een bedrijfsprofiel worden dat een coöperatie of kredietverstrekker kan vertrouwen. De gebruiker beslist. Altijd.",
+        visionStat: "De Afrikaanse markt voor mobiel geld tegen 2030 — en bijna niets ervan is met de stem te bedienen in de talen van zijn gebruikers. Familiegesprekken vandaag. Economische infrastructuur morgen.",
+        esethuLabel: "Vertrouwen &amp; Eigendom",
+        esethuTitle: "Jouw stem blijft van jou.",
+        esethuDesc: "Geen eigendom van een instelling. Niet van het internet gescraped. Van jou, je familie en je gemeenschap — volgens het Esethu Framework, peer-reviewed Afrikaans databeheer (ACL 2025).",
+        trust1: "Uitdrukkelijke toestemming vóór er iets gedeeld wordt",
+        trust2: "Verwijder je stem wanneer je wil — en ze is weg",
+        trust3: "Familiegesprekken zijn standaard privé",
         esethu1Title: "Gratis voor Afrikaanse onderzoekers",
         esethu1Desc: "Open toegang tot taaldata voor Afrikaanse universiteiten en non-profits.",
-        esethu2Title: "Commerci\u00eble licenties voor anderen",
-        esethu2Desc: "Eerlijke licenties voor commerci\u00eble entiteiten. Inkomsten financieren gemeenschappen.",
-        esethu3Title: "Inkomsten Her\u00efnvesteerd",
+        esethu2Title: "Commerciële licenties voor anderen",
+        esethu2Desc: "Eerlijke licenties voor commerciële entiteiten. Inkomsten financieren gemeenschappen.",
+        esethu3Title: "Inkomsten Herïnvesteerd",
         esethu3Desc: "Winsten vloeien terug naar de gemeenschappen die hun stem hebben bijgedragen.",
         ctaTitle: "Elke taal verdient een stem.",
         ctaWaitlist: "Schrijf je in op de wachtlijst",
         ctaNewsletter: "Blijf op de hoogte. Ontvang updates op de lanceerdag.",
         ctaSubscribe: "Abonneren",
+        ctaEmailLabel: "E-mailadres",
         footerTagline: "Ijwi betekent stem in het Kinyarwanda."
       }
     };
@@ -1663,7 +2322,7 @@
       if (!email) return;
 
       btn.disabled = true;
-      btn.textContent = "...";
+      btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
 
       try {
         const res = await fetch(SUPABASE_URL + "/rest/v1/newsletter_signups", {
@@ -1678,7 +2337,8 @@
         });
 
         if (res.ok) {
-          msg.textContent = "You're on the list! We'll notify you on launch day.";
+          msg.innerHTML = '<span class="msg-check" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>' +
+            "You're on the list! We'll notify you on launch day.";
           msg.style.color = "var(--teal-light)";
           input.value = "";
         } else if (res.status === 409) {
@@ -1688,11 +2348,14 @@
           throw new Error("Failed");
         }
       } catch {
-        msg.textContent = "Something went wrong. Try again later.";
-        msg.style.color = "#C0392B";
+        msg.textContent = "Something went wrong. Please try again later.";
+        msg.style.color = "#E8846B";
       } finally {
+        msg.classList.remove("show");
+        void msg.offsetWidth; /* restart entrance animation */
+        msg.classList.add("show");
         btn.disabled = false;
-        btn.textContent = T[currentLang]?.ctaSubscribe || "Subscribe";
+        btn.innerHTML = "<span>" + (T[currentLang]?.ctaSubscribe || "Subscribe") + "</span>";
       }
     });
 
@@ -1734,8 +2397,8 @@
       const h = document.documentElement;
       const scrolled = h.scrollTop;
       const max = h.scrollHeight - h.clientHeight;
-      const pct = max > 0 ? (scrolled / max) * 100 : 0;
-      progressEl.style.width = pct + "%";
+      const pct = max > 0 ? scrolled / max : 0;
+      progressEl.style.transform = "scaleX(" + pct + ")";
     }
     window.addEventListener("scroll", updateProgress, { passive: true });
     updateProgress();
@@ -1810,12 +2473,23 @@
     ];
     const track = document.getElementById("langMarqueeTrack");
     if (track) {
-      const html = LANGS.map(([name, region]) =>
-        `<div class="lang-item"><span class="dot"></span><strong>${name}</strong><span>· ${region}</span></div>`
-      ).join("");
-      // Duplicate for seamless loop
-      track.innerHTML = html + html;
+      const item = (name, region, hidden) =>
+        `<div class="lang-item"${hidden ? ' aria-hidden="true"' : ""}><span class="dot"></span><strong>${name}</strong><span>· ${region}</span></div>`;
+      const html = LANGS.map(([n, r]) => item(n, r, false)).join("");
+      // Duplicate for seamless loop; duplicates hidden from screen readers
+      const dup = LANGS.map(([n, r]) => item(n, r, true)).join("");
+      track.innerHTML = html + dup;
     }
+
+    /* ─── Voice note play toggle (Family Thread mockup) ─── */
+    document.querySelectorAll(".vn-play").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const note = btn.closest(".voice-note");
+        const wasPlaying = note.classList.contains("playing");
+        document.querySelectorAll(".voice-note.playing").forEach(n => n.classList.remove("playing"));
+        if (!wasPlaying) note.classList.add("playing");
+      });
+    });
   </script>
 </body>
 </html>
