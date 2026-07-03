@@ -384,8 +384,10 @@
     .nav-mobile-toggle {
       display: none;
       flex-direction: column;
+      justify-content: center;
       gap: 5px;
-      padding: 4px;
+      padding: 12px;
+      margin: -8px;
       cursor: pointer;
     }
     .nav-mobile-toggle span {
@@ -919,6 +921,7 @@
       gap: 10px;
     }
     .vn-play {
+      position: relative;
       width: 32px;
       height: 32px;
       flex-shrink: 0;
@@ -928,6 +931,13 @@
       align-items: center;
       justify-content: center;
       transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .vn-play::after {
+      /* expands the tap target to 48px without changing the visual size */
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
     }
     .vn-play:hover { transform: scale(1.08); }
     .vn-play:active { transform: scale(0.94); }
@@ -1501,6 +1511,8 @@
       .traction-grid { grid-template-columns: repeat(2, 1fr); }
       .esethu-cards { grid-template-columns: 1fr; }
       .scroll-cue { display: none; }
+      .nav-lang button { padding: 13px 14px; }
+      .footer-left a { display: inline-block; padding: 6px 0; }
     }
 
     @media (max-width: 375px) {
